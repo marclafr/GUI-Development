@@ -45,8 +45,8 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("maps/path2.png");
 
 	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
-
-
+	App->gui->CreateElement(image, SDL_Rect{ 485, 829, 328, 103 });
+	App->render->Blit(App->gui->GetAtlas(), 100, 100, &App->gui->elements.start->data->rect);
 	return true;
 }
 

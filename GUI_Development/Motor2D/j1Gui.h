@@ -19,7 +19,7 @@ enum elem_type
 
 struct Element
 {
-	Element(elem_type type) : e_type(type) {}
+	Element(elem_type type, SDL_Rect rectangle, int ident) : e_type(type), rect(rectangle), id(ident) {}
 	~Element() {}
 
 	SDL_Rect rect;
@@ -67,10 +67,10 @@ public:
 
 	// TODO 2: Create the factory methods
 	// Gui creation functions
-	p2List<Element*> entities;
-	Element* CreateElement(elem_type type);
+	p2List<Element*> elements;
+	int element_id = 0;
+	Element* CreateElement(elem_type type, SDL_Rect rect);
 	bool DeleteElement(int entity_id);
-
 
 	const SDL_Texture* GetAtlas() const;
 

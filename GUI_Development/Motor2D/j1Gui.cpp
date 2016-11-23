@@ -6,6 +6,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 #include "j1Gui.h"
+#include "j1Image.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -52,6 +53,9 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
+	for (int i = 0; i < elements.count(); i++)
+		DeleteElement(elements[i]->id);
+
 	return true;
 }
 
@@ -63,24 +67,34 @@ const SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-Element* j1Gui::CreateElement(elem_type type)
+Element* j1Gui::CreateElement(elem_type type, SDL_Rect rect)
 {
-	static_assert(elem_type::unknown == 6, "code needs update");
+	static_assert(elem_type::unknown == 6, "elements type needs update");
 
 	Element* ret = nullptr;
 
 	switch (type)
 	{
-	case label:
-		//ret = new j1Label();
-		break;
-
-		//case j1Entity::e_type::LABEL: ret = new j1Label(SDL_Texture* tex, SDL_Rect rect, UI_String string); break;
-
+	case elem_type::label: break;
+	case elem_type::text_box: break;
+	case elem_type::image: ret = new j1Image(rect, element_id); break;
+	case elem_type::anim_image: break;
+	case elem_type::button: break;
+	case elem_type::input: break;
 	}
 
 	if (ret != nullptr)
-		entities.add(ret);
+		elements.add(ret); element_id++;
 
 	return ret;
+}
+
+bool j1Gui::DeleteElement(int id)
+{
+	for (int i = 0; i < elements.count(); i++)
+	{
+		if (elements[i]->id == id)
+			RELEASE(elements[i]);
+	}
+	return true;
 }

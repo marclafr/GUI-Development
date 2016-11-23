@@ -123,6 +123,9 @@
     <ClInclude Include="j1Gui.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="j1Image.h">
+      <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -142,6 +145,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Gui Elements">
+      <UniqueIdentifier>{4d02c0a7-a12c-4fa0-9973-1a4b1b9b61d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
