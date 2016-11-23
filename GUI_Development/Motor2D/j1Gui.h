@@ -35,9 +35,11 @@ struct Element
 
 struct UI_String
 {
+	UI_String(p2SString text, int text_size) : text(text), text_size(text_size) {}
+	UI_String(UI_String& txt) { text = txt.text; text_size = txt.text_size; }
 	p2SString text;
 	int text_size;
-	SDL_Texture* font;
+	//SDL_Texture* font;
 };
 // ---------------------------------------------------
 
