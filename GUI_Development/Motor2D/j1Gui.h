@@ -72,7 +72,7 @@ public:
 	Element* CreateElement(elem_type type, SDL_Rect rect);
 	bool DeleteElement(int entity_id);
 
-	const SDL_Texture* GetAtlas() const;
+	SDL_Texture* GetAtlas() const;
 
 private:
 

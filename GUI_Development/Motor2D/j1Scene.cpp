@@ -46,7 +46,6 @@ bool j1Scene::Start()
 
 	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
 	App->gui->CreateElement(image, SDL_Rect{ 485, 829, 328, 103 });
-	App->render->Blit(App->gui->GetAtlas(), 100, 100, &App->gui->elements.start->data->rect);
 	return true;
 }
 
@@ -133,6 +132,8 @@ bool j1Scene::Update(float dt)
 		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		App->render->Blit(debug_tex, pos.x, pos.y);
 	}
+
+	App->render->Blit(App->gui->GetAtlas(), 350, 75, &App->gui->elements.start->data->rect);
 
 	return true;
 }
