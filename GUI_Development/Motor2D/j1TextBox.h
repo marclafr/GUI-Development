@@ -13,9 +13,8 @@ public:
 	bool is_password;
 
 public:
-	//void Draw();
-	//void Update();
-
+	//bool Draw();
+	//bool Update();
 };
 
 #endif // !__TEXT_BOX__

@@ -8,6 +8,9 @@
 #include "j1Gui.h"
 #include "j1Image.h"
 #include "j1TextBox.h"
+#include "j1Label.h"
+#include "j1AnimatedImage.h"
+#include "j1Button.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -56,7 +59,6 @@ bool j1Gui::CleanUp()
 
 	for (int i = 0; i < elements.count(); i++)
 		delete elements[i];
-		//DeleteElement(elements[i]->id);
 
 	elements.clear();
 
@@ -71,7 +73,7 @@ SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-Element* j1Gui::CreateElement(elem_type type, SDL_Rect rect)
+Element* j1Gui::CreateElement(elem_type type, p2SString text, int size, const SDL_Rect* rect)
 {
 	static_assert(elem_type::unknown == 6, "elements type needs update");
 
@@ -79,11 +81,11 @@ Element* j1Gui::CreateElement(elem_type type, SDL_Rect rect)
 
 	switch (type)
 	{
-	case elem_type::label: break;
-	case elem_type::text_box: ret = new j1TextBox("Hello world", 12, false, element_id); break;
-	case elem_type::image: ret = new j1Image(rect, element_id); break;
-	case elem_type::anim_image: break;
-	case elem_type::button: break;
+	case elem_type::label: ret = new j1Label(text, size, element_id); break;
+	case elem_type::text_box: ret = new j1TextBox(text, size, false, element_id); break;
+	case elem_type::image: ret = new j1Image(image, *rect, element_id); break;
+	case elem_type::anim_image: ret = new j1AnimatedImage(*rect, element_id); break;
+	case elem_type::button: ret = new j1Button(*rect, element_id); break;
 	case elem_type::input: break;
 	}
 
@@ -95,13 +97,14 @@ Element* j1Gui::CreateElement(elem_type type, SDL_Rect rect)
 
 bool j1Gui::DeleteElement(int id)
 {
-	/*for (int i = 0; i < elements.count(); i++)
+	p2List_item<Element*>* item = elements.start;
+	for (; item; item = item->next)
 	{
-		if (elements[i]->id == id)
+		if (item->data->id == id)
 		{
-			RELEASE(elements[i]);
-			delete elements[i];
+			delete item;
+			elements.del(item);
 		}
-	}*/
+	}
 	return true;
 }

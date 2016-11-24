@@ -6,24 +6,12 @@
 class j1Image :public Element
 {
 public:
-	j1Image(SDL_Rect rect, int id) : Element(elem_type::image, rect, id) {}
+	j1Image(elem_type image_type, SDL_Rect rect, int id) : Element(image_type, rect, id) {}
 	~j1Image() {}
 
 public:
 	//bool Draw();
 	//bool Update();
-
 };
 
 #endif // !__IMAGE__
-
-/*
-#include "j1Image.h"
-#include "j1Render.h"
-#include "j1App.h"
-
-void j1Image::Draw()
-{
-	App->render->Blit(App->gui->GetAtlas(), 350, 75, &App->gui->elements.start->data->rect);
-}
-*/

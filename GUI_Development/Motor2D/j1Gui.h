@@ -2,8 +2,15 @@
 #define __j1GUI_H__
 
 #include "j1Module.h"
+#include "p2List.h"
 
 #define CURSOR_WIDTH 2
+
+
+struct SDL_Rect;
+struct SDL_Texture;
+struct _TTF_Font;
+struct Element;
 
 // TODO 1: Create your structure of classes
 enum elem_type
@@ -39,7 +46,7 @@ struct UI_String
 	UI_String(UI_String& txt) { text = txt.text; text_size = txt.text_size; }
 	p2SString text;
 	int text_size;
-	//SDL_Texture* font;
+	_TTF_Font* font;
 };
 // ---------------------------------------------------
 
@@ -71,7 +78,7 @@ public:
 	// Gui creation functions
 	p2List<Element*> elements;
 	int element_id = 0;
-	Element* CreateElement(elem_type type, SDL_Rect rect);
+	Element* CreateElement(elem_type type, p2SString text = "", int size = 12, const SDL_Rect* rect = NULL);
 	bool DeleteElement(int entity_id);
 
 	SDL_Texture* GetAtlas() const;

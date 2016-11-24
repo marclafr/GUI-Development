@@ -47,8 +47,10 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("maps/path2.png");
 
 	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
-	App->gui->CreateElement(image, SDL_Rect{ 485, 829, 328, 103 });
-	App->gui->CreateElement(text_box, SDL_Rect{ 400, 750, 328, 103 });
+	SDL_Rect a{ 485, 829, 328, 103 };
+	App->gui->CreateElement(image, "", 12, &a);
+	App->gui->CreateElement(text_box, "Hello World", 12);
+	
 	return true;
 }
 
@@ -138,7 +140,7 @@ bool j1Scene::Update(float dt)
 
 	App->render->Blit(App->gui->GetAtlas(), 350, 75, &App->gui->elements.start->data->rect);
 	SDL_Color a{ ((0),(0),(0),(255)) };
-	App->render->Blit(App->font->Print("Hello world", a), 300, 50);
+	App->render->Blit(App->font->Print("Hello world", a), 400, 50);
 
 	return true;
 }

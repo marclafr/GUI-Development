@@ -55,6 +55,9 @@
     <ClCompile Include="j1Image.cpp">
       <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
     </ClCompile>
+    <ClCompile Include="j1TextBox.cpp">
+      <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -130,6 +133,15 @@
       <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
     </ClInclude>
     <ClInclude Include="j1TextBox.h">
+      <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Label.h">
+      <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1AnimatedImage.h">
+      <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Button.h">
       <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,6 @@
 
 bool j1Image::Draw()
 {
-	//App->render->Blit(App->gui->GetAtlas(), 350, 75, &App->gui->elements.start->data->rect);
+	App->render->Blit(App->gui->GetAtlas(), 350, 75, &App->gui->elements.start->data->rect);
 }
 */
