@@ -28,8 +28,8 @@ struct Element
 
 	void SetRect(SDL_Rect rect); //set position and size
 
-	virtual void Update() {}
-	virtual void Draw() {}
+	virtual bool Update() { return true; }
+	virtual bool Draw() { return true; }
 	virtual void ManageInput() {}
 };
 

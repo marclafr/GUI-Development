@@ -52,6 +52,9 @@
     <ClCompile Include="j1Gui.cpp">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Image.cpp">
+      <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">

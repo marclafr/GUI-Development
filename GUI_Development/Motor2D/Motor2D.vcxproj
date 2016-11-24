@@ -78,6 +78,7 @@
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Gui.cpp" />
+    <ClCompile Include="j1Image.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
     <ClCompile Include="j1Audio.cpp" />

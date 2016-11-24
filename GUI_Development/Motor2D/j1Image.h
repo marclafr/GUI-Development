@@ -10,8 +10,8 @@ public:
 	~j1Image() {}
 
 public:
-	//void Draw();
-	//void Update();
+	//bool Draw();
+	//bool Update();
 
 };
 
