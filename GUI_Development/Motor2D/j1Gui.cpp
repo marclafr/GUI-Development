@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include "j1Gui.h"
 #include "j1Image.h"
+#include "j1TextBox.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -54,7 +55,10 @@ bool j1Gui::CleanUp()
 	LOG("Freeing GUI");
 
 	for (int i = 0; i < elements.count(); i++)
-		DeleteElement(elements[i]->id);
+		delete elements[i];
+		//DeleteElement(elements[i]->id);
+
+	elements.clear();
 
 	return true;
 }
@@ -76,7 +80,7 @@ Element* j1Gui::CreateElement(elem_type type, SDL_Rect rect)
 	switch (type)
 	{
 	case elem_type::label: break;
-	case elem_type::text_box: break;
+	case elem_type::text_box: ret = new j1TextBox("Hello world", 12, false, element_id); break;
 	case elem_type::image: ret = new j1Image(rect, element_id); break;
 	case elem_type::anim_image: break;
 	case elem_type::button: break;
@@ -91,10 +95,13 @@ Element* j1Gui::CreateElement(elem_type type, SDL_Rect rect)
 
 bool j1Gui::DeleteElement(int id)
 {
-	for (int i = 0; i < elements.count(); i++)
+	/*for (int i = 0; i < elements.count(); i++)
 	{
 		if (elements[i]->id == id)
+		{
 			RELEASE(elements[i]);
-	}
+			delete elements[i];
+		}
+	}*/
 	return true;
 }
