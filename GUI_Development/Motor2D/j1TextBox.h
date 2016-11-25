@@ -13,8 +13,8 @@ public:
 	bool is_password;
 
 public:
-	//bool Draw();
-	//bool Update();
+	bool Draw(float dt);
+	//bool Update(float dt);
 };
 
 #endif // !__TEXT_BOX__

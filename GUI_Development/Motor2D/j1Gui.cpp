@@ -46,6 +46,23 @@ bool j1Gui::PreUpdate()
 	return true;
 }
 
+bool j1Gui::Update(float dt)
+{
+	bool ret = true;
+	p2List_item<Element*>* item;
+	item = elements.start;
+	j1Module* pModule = NULL;
+
+	for (item = elements.start; item != NULL && ret == true; item = item->next)
+	{
+		ret = item->data->Update(dt);
+		ret = item->data->Draw(dt);
+		ret = item->data->ManageInput();
+	}
+
+	return ret;
+}
+
 // Called after all Updates
 bool j1Gui::PostUpdate()
 {
@@ -75,7 +92,7 @@ SDL_Texture* j1Gui::GetAtlas() const
 
 Element* j1Gui::CreateElement(elem_type type, p2SString text, int size, const SDL_Rect* rect)
 {
-	static_assert(elem_type::unknown == 6, "elements type needs update");
+	static_assert(elem_type::unknown == 5, "elements type needs update");
 
 	Element* ret = nullptr;
 
@@ -86,7 +103,6 @@ Element* j1Gui::CreateElement(elem_type type, p2SString text, int size, const SD
 	case elem_type::image: ret = new j1Image(image, *rect, element_id); break;
 	case elem_type::anim_image: ret = new j1AnimatedImage(*rect, element_id); break;
 	case elem_type::button: ret = new j1Button(*rect, element_id); break;
-	case elem_type::input: break;
 	}
 
 	if (ret != nullptr)

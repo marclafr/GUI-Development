@@ -11,8 +11,6 @@
 #include "j1Gui.h"
 #include "j1Scene.h"
 
-#include "j1Fonts.h"
-
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("scene");
@@ -137,10 +135,6 @@ bool j1Scene::Update(float dt)
 		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		App->render->Blit(debug_tex, pos.x, pos.y);
 	}
-
-	App->render->Blit(App->gui->GetAtlas(), 350, 75, &App->gui->elements.start->data->rect);
-	SDL_Color a{ ((0),(0),(0),(255)) };
-	App->render->Blit(App->font->Print("Hello world", a), 400, 50);
 
 	return true;
 }

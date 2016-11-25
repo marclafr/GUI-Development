@@ -7,7 +7,7 @@
 #define CURSOR_WIDTH 2
 
 
-struct SDL_Rect;
+#include "SDL/include/SDL_rect.h"
 struct SDL_Texture;
 struct _TTF_Font;
 struct Element;
@@ -20,13 +20,12 @@ enum elem_type
 	image,
 	anim_image,
 	button,
-	input,
 	unknown
 };
 
 struct Element
 {
-	Element(elem_type type, SDL_Rect rectangle, int ident) : e_type(type), rect(rectangle), id(ident) {}
+	Element(elem_type type, const SDL_Rect& rectangle, int ident) : e_type(type), rect(rectangle), id(ident) {}
 	~Element() {}
 
 	SDL_Rect rect;
@@ -35,9 +34,9 @@ struct Element
 
 	void SetRect(SDL_Rect rect); //set position and size
 
-	virtual bool Update() { return true; }
-	virtual bool Draw() { return true; }
-	virtual void ManageInput() {}
+	virtual bool Update(float dt)	 { return true; }
+	virtual bool Draw(float dt)		 { return true; }
+	virtual bool ManageInput()		 { return true; }
 };
 
 struct UI_String
@@ -67,6 +66,8 @@ public:
 
 	// Called before all Updates
 	bool PreUpdate();
+
+	bool Update(float dt);
 
 	// Called after all Updates
 	bool PostUpdate();

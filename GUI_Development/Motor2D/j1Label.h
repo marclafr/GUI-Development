@@ -12,7 +12,7 @@ public:
 	UI_String text;
 
 public:
-	//bool Draw();
+	//bool Draw(float dt);
 };
 
 #endif // !__LABEL__

@@ -6,12 +6,12 @@
 class j1Image :public Element
 {
 public:
-	j1Image(elem_type image_type, SDL_Rect rect, int id) : Element(image_type, rect, id) {}
+	j1Image(elem_type image_type, const SDL_Rect& rect, int id) : Element(image_type, rect, id) {}
 	~j1Image() {}
 
 public:
-	//bool Draw();
-	//bool Update();
+	bool Draw(float dt);
+	//bool Update(float dt);
 };
 
 #endif // !__IMAGE__
