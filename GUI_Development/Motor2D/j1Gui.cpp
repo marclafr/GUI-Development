@@ -90,7 +90,7 @@ SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-Element* j1Gui::CreateElement(elem_type type, p2SString text, int size, const SDL_Rect* rect)
+/*Element* j1Gui::CreateElement(elem_type type)
 {
 	static_assert(elem_type::unknown == 5, "elements type needs update");
 
@@ -105,6 +105,51 @@ Element* j1Gui::CreateElement(elem_type type, p2SString text, int size, const SD
 	case elem_type::button: ret = new j1Button(*rect, element_id); break;
 	}
 
+	if (ret != nullptr)
+		elements.add(ret); element_id++;
+
+	return ret;
+}*/
+
+j1Label * j1Gui::CreateLabel(p2SString text, int size)
+{
+	j1Label* ret = new j1Label(text, size, element_id); 
+	if (ret != nullptr)
+		elements.add(ret); element_id++;
+
+	return ret;
+}
+
+j1TextBox * j1Gui::CreateTextBox(p2SString text, int size, bool is_pw)
+{
+	j1TextBox* ret = new j1TextBox(text, size, false, element_id);
+	if (ret != nullptr)
+		elements.add(ret); element_id++;
+
+	return ret;
+}
+
+j1Image * j1Gui::CreateImage(const SDL_Rect* rect)
+{
+	j1Image* ret = new j1Image(image, *rect, element_id);
+	if (ret != nullptr)
+		elements.add(ret); element_id++;
+
+	return ret;
+}
+
+j1AnimatedImage * j1Gui::CreateAnimImage(const SDL_Rect* rect)
+{
+	j1AnimatedImage* ret = new j1AnimatedImage(*rect, element_id);
+	if (ret != nullptr)
+		elements.add(ret); element_id++;
+
+	return ret;
+}
+
+j1Button * j1Gui::CreateButton(const SDL_Rect* rect)
+{
+	j1Button* ret = new j1Button(*rect, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 

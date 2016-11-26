@@ -11,6 +11,11 @@
 struct SDL_Texture;
 struct _TTF_Font;
 struct Element;
+class j1Image;
+class j1TextBox;
+class j1Button;
+class j1AnimatedImage;
+class j1Label;
 
 // TODO 1: Create your structure of classes
 enum elem_type
@@ -31,6 +36,7 @@ struct Element
 	SDL_Rect rect;
 	int id;
 	elem_type e_type;
+	bool is_visible;
 
 	void SetRect(SDL_Rect rect); //set position and size
 
@@ -79,7 +85,13 @@ public:
 	// Gui creation functions
 	p2List<Element*> elements;
 	int element_id = 0;
-	Element* CreateElement(elem_type type, p2SString text = "", int size = 12, const SDL_Rect* rect = NULL);
+	//Element* CreateElement(elem_type type);
+	j1Label* CreateLabel(p2SString text, int size);
+	j1TextBox* CreateTextBox(p2SString text, int size, bool is_pw);
+	j1Image* CreateImage(const SDL_Rect* rect);
+	j1AnimatedImage* CreateAnimImage(const SDL_Rect* rect);
+	j1Button* CreateButton(const SDL_Rect* rect);
+
 	bool DeleteElement(int entity_id);
 
 	SDL_Texture* GetAtlas() const;

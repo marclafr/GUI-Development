@@ -46,8 +46,8 @@ bool j1Scene::Start()
 
 	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
 	SDL_Rect a{ 485, 829, 328, 103 };
-	App->gui->CreateElement(image, "", 12, &a);
-	App->gui->CreateElement(text_box, "Hello World", 12);
+	j1Image* n_image = App->gui->CreateImage(&a);
+	App->gui->CreateTextBox("Hello world", 12, false);
 	
 	return true;
 }
