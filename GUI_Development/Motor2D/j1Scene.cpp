@@ -10,6 +10,7 @@
 #include "j1PathFinding.h"
 #include "j1Gui.h"
 #include "j1Scene.h"
+#include "j1TextBox.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -46,8 +47,10 @@ bool j1Scene::Start()
 
 	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
 	SDL_Rect a{ 485, 829, 328, 103 };
-	j1Image* n_image = App->gui->CreateImage(&a);
-	App->gui->CreateTextBox("Hello world", 12, false);
+	SDL_Rect position_image{ 400, 100, 328, 103};
+	j1Image* n_image = App->gui->CreateImage(&a, &position_image);
+	SDL_Rect position_text{ 350, 50, 100, 25 };
+	App->gui->CreateTextBox("Hello world", 12, false, &position_text);
 	
 	return true;
 }
@@ -134,6 +137,21 @@ bool j1Scene::Update(float dt)
 	{
 		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		App->render->Blit(debug_tex, pos.x, pos.y);
+	}
+
+	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
+	{
+		if (item->data->mouse_inside == true && item->data->e_type == text_box)
+		{
+			j1TextBox* temp = (j1TextBox*)item->data;
+			temp->text.text = "Mouse inside";
+		}
+		else if((item->data->mouse_inside == false && item->data->e_type == text_box))
+		{
+			j1TextBox* temp = (j1TextBox*)item->data;
+			if (temp->text.text != "Hello world")
+				temp->text.text = "Hello world";
+		}
 	}
 
 	return true;

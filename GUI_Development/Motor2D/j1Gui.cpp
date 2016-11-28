@@ -53,8 +53,18 @@ bool j1Gui::Update(float dt)
 	item = elements.start;
 	j1Module* pModule = NULL;
 
+	iPoint mouse;
+	App->input->GetMousePosition(mouse.x, mouse.y);
+
 	for (item = elements.start; item != NULL && ret == true; item = item->next)
 	{
+		if (mouse.IsInRect(item->data->rect) == true)
+		{
+			item->data->mouse_inside = true;
+		}
+		else
+			item->data->mouse_inside = false;
+
 		ret = item->data->Update(dt);
 		ret = item->data->Draw(dt);
 		ret = item->data->ManageInput();
@@ -111,45 +121,45 @@ SDL_Texture* j1Gui::GetAtlas() const
 	return ret;
 }*/
 
-j1Label * j1Gui::CreateLabel(p2SString text, int size)
+j1Label * j1Gui::CreateLabel(p2SString text, int size, const SDL_Rect* rect)
 {
-	j1Label* ret = new j1Label(text, size, element_id); 
+	j1Label* ret = new j1Label(text, size, *rect, element_id); 
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1TextBox * j1Gui::CreateTextBox(p2SString text, int size, bool is_pw)
+j1TextBox * j1Gui::CreateTextBox(p2SString text, int size, bool is_pw, const SDL_Rect* rect)
 {
-	j1TextBox* ret = new j1TextBox(text, size, false, element_id);
+	j1TextBox* ret = new j1TextBox(text, size, false, rect, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1Image * j1Gui::CreateImage(const SDL_Rect* rect)
+j1Image * j1Gui::CreateImage(const SDL_Rect* section, const SDL_Rect* rect)
 {
-	j1Image* ret = new j1Image(image, *rect, element_id);
+	j1Image* ret = new j1Image(image, *section, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1AnimatedImage * j1Gui::CreateAnimImage(const SDL_Rect* rect)
+j1AnimatedImage * j1Gui::CreateAnimImage(const SDL_Rect* section, const SDL_Rect* rect)
 {
-	j1AnimatedImage* ret = new j1AnimatedImage(*rect, element_id);
+	j1AnimatedImage* ret = new j1AnimatedImage(*section, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1Button * j1Gui::CreateButton(const SDL_Rect* rect)
+j1Button * j1Gui::CreateButton(const SDL_Rect* section, const SDL_Rect* rect)
 {
-	j1Button* ret = new j1Button(*rect, element_id);
+	j1Button* ret = new j1Button(*section, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 

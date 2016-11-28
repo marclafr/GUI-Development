@@ -8,6 +8,8 @@
 #include "p2Defs.h"
 #include <math.h>
 
+struct SDL_Rect;
+
 template<class TYPE>
 class p2Point
 {
@@ -125,6 +127,14 @@ public:
 	TYPE DistanceManhattan(const p2Point& v) const
 	{
 		return abs(v.x - x) + abs(v.y - y);
+	}
+
+	bool IsInRect(SDL_Rect& rect)
+	{
+		if (rect.x< x && rect.w + rect.x>x && rect.y<y && rect.h + rect.y>y)
+			return true;
+		else
+			return false;
 	}
 };
 

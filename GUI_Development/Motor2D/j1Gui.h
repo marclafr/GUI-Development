@@ -30,19 +30,24 @@ enum elem_type
 
 struct Element
 {
-	Element(elem_type type, const SDL_Rect& rectangle, int ident) : e_type(type), rect(rectangle), id(ident) {}
+	Element(elem_type type, const SDL_Rect* rectangle, int ident) : e_type(type), rect(*rectangle), id(ident) {}
 	~Element() {}
 
 	SDL_Rect rect;
 	int id;
 	elem_type e_type;
-	bool is_visible;
+	bool mouse_inside;
+	bool r_click;
+	bool l_click;
 
 	void SetRect(SDL_Rect rect); //set position and size
 
 	virtual bool Update(float dt)	 { return true; }
 	virtual bool Draw(float dt)		 { return true; }
 	virtual bool ManageInput()		 { return true; }
+
+private:
+	SDL_Rect section;
 };
 
 struct UI_String
@@ -86,11 +91,11 @@ public:
 	p2List<Element*> elements;
 	int element_id = 0;
 	//Element* CreateElement(elem_type type);
-	j1Label* CreateLabel(p2SString text, int size);
-	j1TextBox* CreateTextBox(p2SString text, int size, bool is_pw);
-	j1Image* CreateImage(const SDL_Rect* rect);
-	j1AnimatedImage* CreateAnimImage(const SDL_Rect* rect);
-	j1Button* CreateButton(const SDL_Rect* rect);
+	j1Label* CreateLabel(p2SString text, int size, const SDL_Rect* rect);
+	j1TextBox* CreateTextBox(p2SString text, int size, bool is_pw, const SDL_Rect* rect);
+	j1Image* CreateImage(const SDL_Rect* section, const SDL_Rect* rect);
+	j1AnimatedImage* CreateAnimImage(const SDL_Rect* section, const SDL_Rect* rect);
+	j1Button* CreateButton(const SDL_Rect* section, const SDL_Rect* rect);
 
 	bool DeleteElement(int entity_id);
 
