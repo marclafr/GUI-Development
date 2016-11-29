@@ -141,16 +141,28 @@ bool j1Scene::Update(float dt)
 
 	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
 	{
-		if (item->data->mouse_inside == true && item->data->e_type == text_box)
+		if (item->data->e_type == text_box)
 		{
 			j1TextBox* temp = (j1TextBox*)item->data;
-			temp->text.text = "Mouse inside";
-		}
-		else if((item->data->mouse_inside == false && item->data->e_type == text_box))
-		{
-			j1TextBox* temp = (j1TextBox*)item->data;
-			if (temp->text.text != "Hello world")
-				temp->text.text = "Hello world";
+			
+			if (item->data->l_click == true)
+			{
+				temp->text.text = "Left clicked";
+			}
+			if (item->data->r_click == true)
+			{
+				temp->text.text = "Right clicked";
+			}
+			else if (item->data->mouse_inside == true && item->data->l_click == false)
+			{
+				temp->text.text = "Mouse inside";
+			}
+			
+			if (item->data->mouse_inside == false)
+			{
+				if (temp->text.text != "Hello world")
+					temp->text.text = "Hello world";
+			}
 		}
 	}
 

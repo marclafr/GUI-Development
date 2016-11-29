@@ -27,6 +27,7 @@ enum elem_type
 	button,
 	unknown
 };
+#define UNKNOWN_NUM 5
 
 struct Element
 {
@@ -90,7 +91,6 @@ public:
 	// Gui creation functions
 	p2List<Element*> elements;
 	int element_id = 0;
-	//Element* CreateElement(elem_type type);
 	j1Label* CreateLabel(p2SString text, int size, const SDL_Rect* rect);
 	j1TextBox* CreateTextBox(p2SString text, int size, bool is_pw, const SDL_Rect* rect);
 	j1Image* CreateImage(const SDL_Rect* section, const SDL_Rect* rect);
