@@ -9,7 +9,7 @@ bool j1Image::Draw(float dt)
 		if (item->data->e_type == image && item->data->is_visible == true)
 		{
 			j1Image* temp = (j1Image*)item->data;
-			App->render->Blit(App->gui->GetAtlas(), item->data->rect.x, item->data->rect.y, &temp->section);
+			App->render->Blit(App->gui->GetAtlas(), item->data->position.x, item->data->position.y, &temp->section);
 		}
 	}
 	return true;

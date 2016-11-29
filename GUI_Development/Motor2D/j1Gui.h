@@ -31,10 +31,10 @@ enum elem_type
 
 struct Element
 {
-	Element(elem_type type, SDL_Rect& rectangle, int ident) : e_type(type), rect(rectangle), id(ident), is_visible(true) {}
+	Element(elem_type type, SDL_Rect& rectangle, int ident) : e_type(type), position(rectangle), id(ident), is_visible(true) {}
 	~Element() {}
 
-	SDL_Rect rect;
+	SDL_Rect position;
 	int id;
 	elem_type e_type;
 	bool mouse_inside;
@@ -42,7 +42,7 @@ struct Element
 	bool l_click;
 	bool is_visible;
 
-	void SetRect(SDL_Rect rect); //set position and size
+	void SetPosition(SDL_Rect& rect); //set position and size
 
 	virtual bool Update(float dt)	 { return true; }
 	virtual bool Draw(float dt)		 { return true; }

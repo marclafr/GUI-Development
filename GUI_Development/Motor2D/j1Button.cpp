@@ -10,7 +10,7 @@ bool j1Button::Draw(float dt)
 		if (item->data->e_type == button && item->data->is_visible == true)
 		{
 			j1Button* temp = (j1Button*)item->data;
-			App->render->Blit(App->gui->GetAtlas(), item->data->rect.x, item->data->rect.y, &temp->section);
+			App->render->Blit(App->gui->GetAtlas(), item->data->position.x, item->data->position.y, &temp->section);
 		}
 	}
 	return true;

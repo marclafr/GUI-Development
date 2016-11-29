@@ -58,7 +58,7 @@ bool j1Gui::Update(float dt)
 
 	for (item = elements.start; item != NULL && ret == true; item = item->next)
 	{
-		if (mouse.IsInRect(item->data->rect) == true)
+		if (mouse.IsInRect(item->data->position) == true)
 		{
 			item->data->mouse_inside = true;
 
@@ -179,4 +179,11 @@ bool j1Gui::DeleteElement(int id)
 		}
 	}
 	return true;
+}
+
+// struct Element ---------------------------------------------------
+
+void Element::SetPosition(SDL_Rect& rect)
+{
+	position = rect;
 }
