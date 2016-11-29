@@ -6,7 +6,7 @@
 class j1TextBox :public Element
 {
 public:
-	j1TextBox(p2SString text, int size, bool is_password, const SDL_Rect* rect, int id) : text(text, size), is_password(is_password), Element(elem_type::text_box, rect, id) {}
+	j1TextBox(p2SString text, int size, bool is_password, SDL_Rect& rect, int id) : text(text, size), is_password(is_password), Element(elem_type::text_box, rect, id) {}
 	~j1TextBox() {}
 
 	UI_String text;

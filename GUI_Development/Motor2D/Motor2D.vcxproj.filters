@@ -58,6 +58,9 @@
     <ClCompile Include="j1TextBox.cpp">
       <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
     </ClCompile>
+    <ClCompile Include="j1Button.cpp">
+      <Filter>Desenvolupament  ========\Modules\Gui Elements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">

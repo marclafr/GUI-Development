@@ -46,11 +46,9 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("maps/path2.png");
 
 	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
-	SDL_Rect a{ 485, 829, 328, 103 };
-	SDL_Rect position_image{ 400, 100, 328, 103};
-	j1Image* n_image = App->gui->CreateImage(&a, &position_image);
-	SDL_Rect position_text{ 350, 50, 100, 25 };
-	App->gui->CreateTextBox("Hello world", 12, false, &position_text);
+	j1Image* n_image = App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
+	App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 350, 50, 100, 25 });
+	App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 400, 100, 225, 61 });
 	
 	return true;
 }

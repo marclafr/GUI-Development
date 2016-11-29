@@ -117,17 +117,17 @@ SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-j1Label * j1Gui::CreateLabel(p2SString text, int size, const SDL_Rect* rect)
+j1Label * j1Gui::CreateLabel(const p2SString& text, int size, SDL_Rect& rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1Label* ret = new j1Label(text, size, *rect, element_id);
+	j1Label* ret = new j1Label(text, size, rect, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1TextBox * j1Gui::CreateTextBox(p2SString text, int size, bool is_pw, const SDL_Rect* rect)
+j1TextBox * j1Gui::CreateTextBox(const p2SString& text, int size, bool is_pw, SDL_Rect& rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	j1TextBox* ret = new j1TextBox(text, size, false, rect, element_id);
@@ -137,30 +137,30 @@ j1TextBox * j1Gui::CreateTextBox(p2SString text, int size, bool is_pw, const SDL
 	return ret;
 }
 
-j1Image * j1Gui::CreateImage(const SDL_Rect* section, const SDL_Rect* rect)
+j1Image * j1Gui::CreateImage(SDL_Rect& section, SDL_Rect& rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1Image* ret = new j1Image(image, *section, element_id);
+	j1Image* ret = new j1Image(image, section, rect, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1AnimatedImage * j1Gui::CreateAnimImage(const SDL_Rect* section, const SDL_Rect* rect)
+j1AnimatedImage * j1Gui::CreateAnimImage(SDL_Rect& section, SDL_Rect& rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1AnimatedImage* ret = new j1AnimatedImage(*section, element_id);
+	j1AnimatedImage* ret = new j1AnimatedImage(section, rect, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1Button * j1Gui::CreateButton(const SDL_Rect* section, const SDL_Rect* rect)
+j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1Button* ret = new j1Button(*section, element_id);
+	j1Button* ret = new j1Button(section, rect, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
