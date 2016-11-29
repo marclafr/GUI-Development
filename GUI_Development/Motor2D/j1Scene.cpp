@@ -141,25 +141,24 @@ bool j1Scene::Update(float dt)
 	{
 		if (item->data->e_type == text_box)
 		{
-			j1TextBox* temp = (j1TextBox*)item->data;
-			
+			j1TextBox* temp = (j1TextBox*)item->data;			
 			if (item->data->l_click == true)
 			{
-				temp->text.text = "Left clicked";
+				temp->SetText("Left clicked");
 			}
 			if (item->data->r_click == true)
 			{
-				temp->text.text = "Right clicked";
+				temp->SetText("Right clicked");
 			}
 			else if (item->data->mouse_inside == true && item->data->l_click == false)
 			{
-				temp->text.text = "Mouse inside";
+				temp->SetText("Mouse inside");
 			}
 			
 			if (item->data->mouse_inside == false)
 			{
-				if (temp->text.text != "Hello world")
-					temp->text.text = "Hello world";
+				if (temp->GetText() != "Hello world")
+					temp->SetText("Hello world");
 			}
 		}
 	}

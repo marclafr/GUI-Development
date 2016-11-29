@@ -15,7 +15,7 @@ public:
 
 public:
 	bool Draw(float dt);
-	//bool Update(float dt);
+	bool Update(float dt);
 };
 
 #endif // !__BUTTON__

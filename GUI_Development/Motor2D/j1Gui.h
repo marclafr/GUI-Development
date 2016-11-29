@@ -56,6 +56,7 @@ struct UI_String
 {
 	UI_String(p2SString text, int text_size) : text(text), text_size(text_size) {}
 	UI_String(UI_String& txt) { text = txt.text; text_size = txt.text_size; }
+	~UI_String() {}
 	p2SString text;
 	int text_size;
 	_TTF_Font* font;

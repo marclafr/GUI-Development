@@ -3,6 +3,16 @@
 #include "j1App.h"
 #include "j1Fonts.h"
 
+void j1TextBox::SetText(const char * txt)
+{
+	text.text = txt;
+}
+
+const char * j1TextBox::GetText()
+{
+	return text.text.GetString();
+}
+
 bool j1TextBox::Draw(float dt)
 {
 	SDL_Color color{ ((255),(255),(255),(255)) };
