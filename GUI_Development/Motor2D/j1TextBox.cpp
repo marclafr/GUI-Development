@@ -27,3 +27,36 @@ bool j1TextBox::Draw(float dt)
 	}
 	return true;
 }
+
+bool j1TextBox::Update(float dt)
+{
+	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
+	{
+		if (item->data->e_type == text_box)
+		{
+			j1TextBox* temp = (j1TextBox*)item->data;
+			if (temp->text.text == "Left clicked" || temp->text.text == "Right clicked" || temp->text.text == "Mouse inside" || temp->text.text == "Hello world")
+			{
+				if (item->data->l_click == true)
+				{
+					temp->SetText("Left clicked");
+				}
+				if (item->data->r_click == true)
+				{
+					temp->SetText("Right clicked");
+				}
+				else if (item->data->mouse_inside == true && item->data->l_click == false)
+				{
+					temp->SetText("Mouse inside");
+				}
+
+				if (item->data->mouse_inside == false)
+				{
+					if (temp->GetText() != "Hello world")
+						temp->SetText("Hello world");
+				}
+			}
+		}
+	}
+	return true;
+}

@@ -46,10 +46,15 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("maps/path2.png");
 
 	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
-	j1Image* n_image = App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
-	App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 350, 50, 100, 25 });
-	App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 400, 100, 225, 61 });
+	Element* screen = (Element*)App->gui->CreateImage(SDL_Rect{ 0,0,0,0 }, SDL_Rect{ 0,0, 640,480 }); //SCREEN
 	
+	j1Image* img = App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
+	j1TextBox* txt = App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 });
+	j1Button* button = App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 800, 200, 225, 61 });
+	Element* window = (Element*)App->gui->CreateImage(SDL_Rect{ 31,542,424,454 }, SDL_Rect{ 300,100,424,454 });
+	
+	screen->sons.add(window);
+
 	return true;
 }
 
@@ -136,33 +141,6 @@ bool j1Scene::Update(float dt)
 		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		App->render->Blit(debug_tex, pos.x, pos.y);
 	}
-
-	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
-	{
-		if (item->data->e_type == text_box)
-		{
-			j1TextBox* temp = (j1TextBox*)item->data;			
-			if (item->data->l_click == true)
-			{
-				temp->SetText("Left clicked");
-			}
-			if (item->data->r_click == true)
-			{
-				temp->SetText("Right clicked");
-			}
-			else if (item->data->mouse_inside == true && item->data->l_click == false)
-			{
-				temp->SetText("Mouse inside");
-			}
-			
-			if (item->data->mouse_inside == false)
-			{
-				if (temp->GetText() != "Hello world")
-					temp->SetText("Hello world");
-			}
-		}
-	}
-
 	return true;
 }
 

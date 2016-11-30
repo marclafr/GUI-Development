@@ -12,7 +12,7 @@ public:
 	SDL_Rect section;
 public:
 	bool Draw(float dt);
-	//bool Update(float dt);
+	bool Update(float dt);
 };
 
 #endif // !__IMAGE__

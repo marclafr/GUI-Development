@@ -18,7 +18,7 @@ public:
 	void SetText(const char* text);
 	const char* GetText();
 	bool Draw(float dt);
-	//bool Update(float dt);
+	bool Update(float dt);
 };
 
 #endif // !__TEXT_BOX__

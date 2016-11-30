@@ -62,17 +62,17 @@ bool j1Gui::Update(float dt)
 		{
 			item->data->mouse_inside = true;
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT))
-			{
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 				item->data->l_click = true;
-				item->data->r_click = false;
-			}
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT))
-			{
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
 				item->data->r_click = true;
+
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 				item->data->l_click = false;
-			}
+		
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
+				item->data->r_click = false;
 		}
 		else
 		{
@@ -84,7 +84,6 @@ bool j1Gui::Update(float dt)
 
 		ret = item->data->Update(dt);
 		ret = item->data->Draw(dt);
-		ret = item->data->ManageInput();
 	}
 
 	return ret;

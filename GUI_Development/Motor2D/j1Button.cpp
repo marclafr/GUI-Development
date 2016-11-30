@@ -26,10 +26,10 @@ bool j1Button::Update(float dt)
 			j1Button* temp = (j1Button*)item->data;
 			if (item->data->l_click == true || item->data->r_click == true)
 			{
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+				if (item->data->l_click == true || item->data->r_click == true)
 					temp->section = { 415,172,225,61 };
-				
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
+
+				else
 					temp->section = { 5, 117, 225, 61 };
 			}
 

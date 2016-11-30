@@ -41,12 +41,13 @@ struct Element
 	bool r_click;
 	bool l_click;
 	bool is_visible;
+	p2List<Element*> sons;
+	int priority;
 
 	void SetPosition(SDL_Rect& rect); //set position and size
 
 	virtual bool Update(float dt)	 { return true; }
 	virtual bool Draw(float dt)		 { return true; }
-	virtual bool ManageInput()		 { return true; }
 
 private:
 	SDL_Rect section;
@@ -54,7 +55,7 @@ private:
 
 struct UI_String
 {
-	UI_String(p2SString text, int text_size) : text(text), text_size(text_size) {}
+	UI_String(p2SString& text, int text_size) : text(text), text_size(text_size) {}
 	UI_String(UI_String& txt) { text = txt.text; text_size = txt.text_size; }
 	~UI_String() {}
 	p2SString text;
