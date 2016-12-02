@@ -49,41 +49,44 @@ bool j1Gui::PreUpdate()
 bool j1Gui::Update(float dt)
 {
 	bool ret = true;
-	p2List_item<Element*>* item;
-	item = elements.start;
-	j1Module* pModule = NULL;
 
 	iPoint mouse;
 	App->input->GetMousePosition(mouse.x, mouse.y);
-
-	for (item = elements.start; item != NULL && ret == true; item = item->next)
+		
+	Element* screen = elements.start->data;
+	int j = screen->sons.count();
+	p2List_item<Element*>* item = screen->sons.start;
+	
+	for (p2List_item<Element*>* a = elements.start; a; a = a->next)
 	{
-		if (mouse.IsInRect(item->data->position) == true)
+		if (mouse.IsInRect(a->data->position) == true)
 		{
-			item->data->mouse_inside = true;
+			a->data->mouse_inside = true;
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-				item->data->l_click = true;
+				a->data->l_click = true;
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-				item->data->r_click = true;
+				a->data->r_click = true;
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-				item->data->l_click = false;
-		
+				a->data->l_click = false;
+
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
-				item->data->r_click = false;
+				a->data->r_click = false;
 		}
 		else
 		{
-			item->data->mouse_inside = false;
-			item->data->l_click = false;
-			item->data->r_click = false;
+			a->data->mouse_inside = false;
+			a->data->l_click = false;
+			a->data->r_click = false;
 		}
-		
-
-		ret = item->data->Update(dt);
-		ret = item->data->Draw(dt);
+	}
+	
+	for (int i = 0; screen->sons.count() > i; i++, item = item->next)
+	{
+		ret = item->data->Update(dt, item->data);
+		ret = item->data->Draw(dt, item->data);
 	}
 
 	return ret;

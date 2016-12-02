@@ -17,8 +17,8 @@ private:
 public:
 	void SetText(const char* text);
 	const char* GetText();
-	bool Draw(float dt);
-	bool Update(float dt);
+	bool Draw(float dt, Element* item);
+	bool Update(float dt, Element* item);
 };
 
 #endif // !__TEXT_BOX__

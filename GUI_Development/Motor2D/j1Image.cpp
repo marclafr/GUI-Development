@@ -3,41 +3,37 @@
 #include "j1App.h"
 #include "j1Input.h"
 
-bool j1Image::Draw(float dt)
+bool j1Image::Draw(float dt, Element* item)
 {
-	/*for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
+	j1Image* temp = (j1Image*)item;
+	App->render->Blit(App->gui->GetAtlas(), item->position.x, item->position.y, &temp->section);
+	p2List_item<Element*>* son_item = item->sons.start;
+	for (int i = 0; item->sons.count() > i; i++, son_item = son_item->next)
 	{
-		if (item->data->e_type == image && item->data->is_visible == true)
-		{
-			j1Image* temp = (j1Image*)item->data;
-			App->render->Blit(App->gui->GetAtlas(), item->data->position.x, item->data->position.y, &temp->section);
-		}
-	}*/
-	/*Element* screen = App->gui->elements.start->data;
-	for (p2List_item<Element*>* item = screen->sons.start; item; item = item->next)
-	{
-		item->data->Draw(dt);
-	}*/
+		p2List_item<Element*>* son_item = item->sons.start;
+		son_item->data->Draw(dt, son_item->data);
+	}
 
 	return true;
 }
 
-bool j1Image::Update(float dt)
+bool j1Image::Update(float dt, Element* item)
 {
-	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
+	j1Image* temp = (j1Image*)item;
+	iPoint mouse;
+	App->input->GetMousePosition(mouse.x, mouse.y);
+	//TODO calculate origin position once
+	iPoint origin;
+	origin.x = mouse.x - item->position.x;
+	origin.y = mouse.y - item->position.y;
+	item->position.x = mouse.x - origin.x;
+	item->position.y = mouse.y - origin.y;
+
+	p2List_item<Element*>* son_item = item->sons.start;
+	for (int i = 0; item->sons.count() > i; i++, son_item = son_item->next)
 	{
-		if (item->data->e_type == image && item->data->l_click == true)
-		{
-			j1Image* temp = (j1Image*)item->data;
-			iPoint mouse;
-			App->input->GetMousePosition(mouse.x, mouse.y);
-			//TODO calculate origin position once
-			iPoint origin;
-			origin.x = mouse.x - item->data->position.x;
-			origin.y = mouse.y - item->data->position.y;
-			item->data->position.x = mouse.x - origin.x;
-			item->data->position.y = mouse.y - origin.y;
-		}
+		p2List_item<Element*>* son_item = item->sons.start;
+		son_item->data->Update(dt, son_item->data);
 	}
 	return true;
 }

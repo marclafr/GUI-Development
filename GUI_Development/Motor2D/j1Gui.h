@@ -17,7 +17,6 @@ class j1Button;
 class j1AnimatedImage;
 class j1Label;
 
-// TODO 1: Create your structure of classes
 enum elem_type
 {
 	label = 0,
@@ -42,12 +41,13 @@ struct Element
 	bool l_click;
 	bool is_visible;
 	p2List<Element*> sons;
+	Element* parent;
 	int priority;
 
 	void SetPosition(SDL_Rect& rect); //set position and size
 
-	virtual bool Update(float dt)	 { return true; }
-	virtual bool Draw(float dt)		 { return true; }
+	virtual bool Update(float dt, Element* item)	 { return true; }
+	virtual bool Draw(float dt, Element* item)		 { return true; }
 
 private:
 	SDL_Rect section;
@@ -90,7 +90,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// TODO 2: Create the factory methods
 	// Gui creation functions
 	p2List<Element*> elements;
 	int element_id = 0;

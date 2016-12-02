@@ -45,15 +45,18 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
-	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
 	Element* screen = (Element*)App->gui->CreateImage(SDL_Rect{ 0,0,0,0 }, SDL_Rect{ 0,0, 640,480 }); //SCREEN
 	
-	j1Image* img = App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
-	j1TextBox* txt = App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 });
-	j1Button* button = App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 800, 200, 225, 61 });
+	Element* img = (Element*)App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
+	Element* txt = (Element*)App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 });
+	Element* button = (Element*)App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 800, 200, 225, 61 });
 	Element* window = (Element*)App->gui->CreateImage(SDL_Rect{ 31,542,424,454 }, SDL_Rect{ 300,100,424,454 });
 	
-	screen->sons.add(window);
+	screen->parent = nullptr;
+	screen->sons.add(window);		window->parent = screen;
+	screen->sons.add(txt);			txt->parent = screen;
+	screen->sons.add(img);			img->parent = screen;
+	window->sons.add(button);		button->parent = window;
 
 	return true;
 }

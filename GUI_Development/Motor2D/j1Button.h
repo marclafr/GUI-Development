@@ -14,8 +14,8 @@ public:
 	SDL_Rect section;
 
 public:
-	bool Draw(float dt);
-	bool Update(float dt);
+	bool Draw(float dt, Element* item);
+	bool Update(float dt, Element* item);
 };
 
 #endif // !__BUTTON__

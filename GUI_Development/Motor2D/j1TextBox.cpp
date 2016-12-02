@@ -13,22 +13,24 @@ const char * j1TextBox::GetText()
 	return text.text.GetString();
 }
 
-bool j1TextBox::Draw(float dt)
+bool j1TextBox::Draw(float dt, Element* item)
 {
 	//SDL_Color color{ ((255),(255),(255),(255)) };
+
+	j1TextBox* temp = (j1TextBox*)item;
+	App->render->Blit(App->font->Print(temp->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }), item->position.x, item->position.y);	
 	
-	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
+	p2List_item<Element*>* son_item = item->sons.start;
+	for (int i = 0; item->sons.count() > i; i++, son_item = son_item->next)
 	{
-		if (item->data->e_type == text_box && item->data->is_visible == true)
-		{
-			j1TextBox* temp = (j1TextBox*)item->data;
-			App->render->Blit(App->font->Print(temp->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }), item->data->position.x, item->data->position.y);
-		}
+		p2List_item<Element*>* son_item = item->sons.start;
+		son_item->data->Draw(dt, son_item->data);
 	}
+
 	return true;
 }
 
-bool j1TextBox::Update(float dt)
+bool j1TextBox::Update(float dt, Element* item)
 {
 	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
 	{
@@ -57,6 +59,13 @@ bool j1TextBox::Update(float dt)
 				}
 			}
 		}
+	}
+
+	p2List_item<Element*>* son_item = item->sons.start;
+	for (int i = 0; item->sons.count() > i; i++, son_item = son_item->next)
+	{
+		p2List_item<Element*>* son_item = item->sons.start;
+		son_item->data->Update(dt, son_item->data);
 	}
 	return true;
 }
