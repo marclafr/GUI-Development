@@ -20,20 +20,26 @@ bool j1Image::Draw(float dt, Element* item)
 bool j1Image::Update(float dt, Element* item)
 {
 	j1Image* temp = (j1Image*)item;
-	iPoint mouse;
-	App->input->GetMousePosition(mouse.x, mouse.y);
+	iPoint mouse_motion;
+	//App->input->GetMousePosition(mouse.x, mouse.y);
 	//TODO calculate origin position once
-	iPoint origin;
+	/*iPoint origin;
 	origin.x = mouse.x - item->position.x;
 	origin.y = mouse.y - item->position.y;
 	item->position.x = mouse.x - origin.x;
 	item->position.y = mouse.y - origin.y;
-
+	*/
 	p2List_item<Element*>* son_item = item->sons.start;
 	for (int i = 0; item->sons.count() > i; i++, son_item = son_item->next)
 	{
 		p2List_item<Element*>* son_item = item->sons.start;
 		son_item->data->Update(dt, son_item->data);
+	}
+	if (temp->l_click == true)
+	{
+		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+		temp->position.x += mouse_motion.x;
+		temp->position.y += mouse_motion.y;
 	}
 	return true;
 }
