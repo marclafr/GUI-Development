@@ -54,8 +54,8 @@ bool j1Gui::Update(float dt)
 	App->input->GetMousePosition(mouse.x, mouse.y);
 		
 	Element* screen = elements.start->data;
-	int j = screen->sons.count();
-	p2List_item<Element*>* item = screen->sons.start;
+	int j = screen->childs.count();
+	p2List_item<Element*>* item = screen->childs.start;
 	
 	for (p2List_item<Element*>* a = elements.start; a; a = a->next)
 	{
@@ -75,6 +75,7 @@ bool j1Gui::Update(float dt)
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
 				a->data->r_click = false;
 		}
+
 		else
 		{
 			a->data->mouse_inside = false;
@@ -83,7 +84,7 @@ bool j1Gui::Update(float dt)
 		}
 	}
 	
-	for (int i = 0; screen->sons.count() > i; i++, item = item->next)
+	for (int i = 0; screen->childs.count() > i; i++, item = item->next)
 	{
 		ret = item->data->Update(dt, item->data);
 		ret = item->data->Draw(dt, item->data);

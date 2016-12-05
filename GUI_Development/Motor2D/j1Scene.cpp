@@ -53,10 +53,10 @@ bool j1Scene::Start()
 	Element* window = (Element*)App->gui->CreateImage(SDL_Rect{ 31,542,424,454 }, SDL_Rect{ 300,100,424,454 });
 	
 	screen->parent = nullptr;
-	screen->sons.add(window);		window->parent = screen;
-	screen->sons.add(txt);			txt->parent = screen;
-	screen->sons.add(img);			img->parent = screen;
-	window->sons.add(button);		button->parent = window;
+	screen->childs.add(window);		window->parent = screen;
+	screen->childs.add(txt);			txt->parent = screen;
+	screen->childs.add(img);			img->parent = screen;
+	window->childs.add(button);		button->parent = window;
 
 	return true;
 }

@@ -7,11 +7,11 @@ bool j1Button::Draw(float dt, Element* item)
 {
 	j1Button* temp = (j1Button*)item;
 	App->render->Blit(App->gui->GetAtlas(), item->position.x, item->position.y, &temp->section);
-	p2List_item<Element*>* son_item = item->sons.start;
-	for (int i = 0; item->sons.count() > i; i++, son_item = son_item->next)
+	p2List_item<Element*>* childs_item = item->childs.start;
+	for (int i = 0; item->childs.count() > i; i++, childs_item = childs_item->next)
 	{
-		p2List_item<Element*>* son_item = item->sons.start;
-		son_item->data->Draw(dt, son_item->data);
+		p2List_item<Element*>* childs_item = item->childs.start;
+		childs_item->data->Draw(dt, childs_item->data);
 	}
 
 	return true;
@@ -39,11 +39,11 @@ bool j1Button::Update(float dt, Element* item)
 		temp->section = { 647, 173, 225, 61 };
 	}
 
-	p2List_item<Element*>* son_item = item->sons.start;
-	for (int i = 0; item->sons.count() > i; i++, son_item = son_item->next)
+	p2List_item<Element*>* childs_item = item->childs.start;
+	for (int i = 0; item->childs.count() > i; i++, childs_item = childs_item->next)
 	{
-		p2List_item<Element*>* son_item = item->sons.start;
-		son_item->data->Update(dt, son_item->data);
+		p2List_item<Element*>* childs_item = item->childs.start;
+		childs_item->data->Update(dt, childs_item->data);
 	}
 	return true;
 }

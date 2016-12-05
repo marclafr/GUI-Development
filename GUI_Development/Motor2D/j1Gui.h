@@ -40,7 +40,7 @@ struct Element
 	bool r_click;
 	bool l_click;
 	bool is_visible;
-	p2List<Element*> sons;
+	p2List<Element*> childs;
 	Element* parent;
 	int priority;
 
