@@ -99,6 +99,7 @@ public:
 	j1Image* CreateImage(SDL_Rect& section, SDL_Rect& rect);
 	j1AnimatedImage* CreateAnimImage(SDL_Rect& section, SDL_Rect& rect);
 	j1Button* CreateButton(SDL_Rect& section, SDL_Rect& rect);
+	void DragElement(Element* item);
 
 	bool DeleteElement(int entity_id);
 

@@ -43,19 +43,8 @@ bool j1Button::Update(float dt, Element* item)
 	{
 		temp->section = { 647, 173, 225, 61 };
 	}
-
-	if ((temp->l_click == true || item->parent->l_click == true) && item->can_drag == true)
-	{
-		iPoint mouse_motion;
-		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-		temp->position.x += mouse_motion.x;
-		temp->position.y += mouse_motion.y;
-		for (childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
-		{
-			childs_item->data->position.x += mouse_motion.x;
-			childs_item->data->position.y += mouse_motion.y;
-		}
-	}
+	if (temp->l_click == true && item->can_drag == true)
+		App->gui->DragElement(item);
 
 	return true;
 }

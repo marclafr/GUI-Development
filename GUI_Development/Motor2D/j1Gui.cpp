@@ -170,6 +170,38 @@ j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect)
 	return ret;
 }
 
+void j1Gui::DragElement(Element* item)
+{
+	Element* temp = nullptr;
+	switch (item->e_type)
+	{
+	case image:
+		temp = (j1Image*)item;
+		break;
+	case button:
+		temp = (j1Button*)item;
+		break;
+	case label:
+		temp = (j1Label*)item;
+		break;
+	case text_box:
+		temp = (j1TextBox*)item;
+		break;
+	case anim_image:
+		temp = (j1AnimatedImage*)item;
+		break;
+	}
+
+	iPoint mouse_motion;
+	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+	temp->position.x += mouse_motion.x;
+	temp->position.y += mouse_motion.y;
+	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
+	{
+		DragElement(childs_item->data);
+	}
+}
+
 bool j1Gui::DeleteElement(int id)
 {
 	p2List_item<Element*>* item = elements.start;

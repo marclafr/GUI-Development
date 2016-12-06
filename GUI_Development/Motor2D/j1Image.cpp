@@ -25,21 +25,8 @@ bool j1Image::Update(float dt, Element* item)
 	{
 		childs_item->data->Update(dt, childs_item->data);
 	}
-
 	if (temp->l_click == true && item->can_drag == true)
-	{
-		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-		temp->position.x += mouse_motion.x;
-		temp->position.y += mouse_motion.y;
-		for (childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
-		{
-			if (childs_item->data->e_type != button)	//buttons already have this implemented			//TODO function Drag in gui.cpp?
-			{
-				childs_item->data->position.x += mouse_motion.x;
-				childs_item->data->position.y += mouse_motion.y;
-			}
-		}
-	}
+		App->gui->DragElement(item);
 
 	return true;
 }
