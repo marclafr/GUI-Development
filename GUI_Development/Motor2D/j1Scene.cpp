@@ -49,14 +49,23 @@ bool j1Scene::Start()
 	
 	Element* img = (Element*)App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
 	Element* txt = (Element*)App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 });
-	Element* button = (Element*)App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 800, 200, 225, 61 });
+	Element* button = (Element*)App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 400, 350, 225, 61 });
 	Element* window = (Element*)App->gui->CreateImage(SDL_Rect{ 31,542,424,454 }, SDL_Rect{ 300,100,424,454 });
-	
+	Element* wind_title = (Element*)App->gui->CreateTextBox("Window Title", 40, false, SDL_Rect{ 310, 110, 50, 25 });
+	Element* butt_title = (Element*)App->gui->CreateTextBox("Button", 40, false, SDL_Rect{ 410, 360, 50, 25 });
+
 	screen->parent = nullptr;
-	screen->childs.add(window);		window->parent = screen;
+	screen->childs.add(window);			window->parent = screen;
 	screen->childs.add(txt);			txt->parent = screen;
 	screen->childs.add(img);			img->parent = screen;
-	window->childs.add(button);		button->parent = window;
+	window->childs.add(button);			button->parent = window;
+	window->childs.add(wind_title);		wind_title->parent = window;
+	button->childs.add(butt_title);		butt_title->parent = button;
+
+	window->can_drag = true;
+	button->can_drag = true;
+	wind_title->can_drag = true;
+	butt_title->can_drag = true;
 
 	return true;
 }

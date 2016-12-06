@@ -20,10 +20,8 @@ bool j1TextBox::Draw(float dt, Element* item)
 	j1TextBox* temp = (j1TextBox*)item;
 	App->render->Blit(App->font->Print(temp->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }), item->position.x, item->position.y);	
 	
-	p2List_item<Element*>* childs_item = item->childs.start;
-	for (int i = 0; item->childs.count() > i; i++, childs_item = childs_item->next)
+	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
 	{
-		p2List_item<Element*>* childs_item = item->childs.start;
 		childs_item->data->Draw(dt, childs_item->data);
 	}
 
@@ -32,6 +30,11 @@ bool j1TextBox::Draw(float dt, Element* item)
 
 bool j1TextBox::Update(float dt, Element* item)
 {
+	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
+	{
+		childs_item->data->Update(dt, childs_item->data);
+	}
+	
 	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
 	{
 		if (item->data->e_type == text_box)
@@ -60,12 +63,6 @@ bool j1TextBox::Update(float dt, Element* item)
 			}
 		}
 	}
-
-	p2List_item<Element*>* childs_item = item->childs.start;
-	for (int i = 0; item->childs.count() > i; i++, childs_item = childs_item->next)
-	{
-		p2List_item<Element*>* childs_item = item->childs.start;
-		childs_item->data->Update(dt, childs_item->data);
-	}
+	
 	return true;
 }

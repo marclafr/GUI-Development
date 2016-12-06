@@ -8,9 +8,8 @@ bool j1Button::Draw(float dt, Element* item)
 	j1Button* temp = (j1Button*)item;
 	App->render->Blit(App->gui->GetAtlas(), item->position.x, item->position.y, &temp->section);
 	p2List_item<Element*>* childs_item = item->childs.start;
-	for (int i = 0; item->childs.count() > i; i++, childs_item = childs_item->next)
+	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
 	{
-		p2List_item<Element*>* childs_item = item->childs.start;
 		childs_item->data->Draw(dt, childs_item->data);
 	}
 
@@ -19,6 +18,12 @@ bool j1Button::Draw(float dt, Element* item)
 
 bool j1Button::Update(float dt, Element* item)
 {
+	p2List_item<Element*>* childs_item;
+	for (childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
+	{
+		childs_item->data->Update(dt, childs_item->data);
+	}
+	
 	j1Button* temp = (j1Button*)item;
 	if (item->l_click == true || item->r_click == true)
 	{
@@ -39,11 +44,18 @@ bool j1Button::Update(float dt, Element* item)
 		temp->section = { 647, 173, 225, 61 };
 	}
 
-	p2List_item<Element*>* childs_item = item->childs.start;
-	for (int i = 0; item->childs.count() > i; i++, childs_item = childs_item->next)
+	if ((temp->l_click == true || item->parent->l_click == true) && item->can_drag == true)
 	{
-		p2List_item<Element*>* childs_item = item->childs.start;
-		childs_item->data->Update(dt, childs_item->data);
+		iPoint mouse_motion;
+		App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+		temp->position.x += mouse_motion.x;
+		temp->position.y += mouse_motion.y;
+		for (childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
+		{
+			childs_item->data->position.x += mouse_motion.x;
+			childs_item->data->position.y += mouse_motion.y;
+		}
 	}
+
 	return true;
 }

@@ -42,6 +42,7 @@ struct Element
 	bool is_visible;
 	p2List<Element*> childs;
 	Element* parent;
+	bool can_drag;
 	int priority;
 
 	void SetPosition(SDL_Rect& rect); //set position and size
