@@ -49,8 +49,8 @@ bool j1Scene::Start()
 	
 	Element* img = (Element*)App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
 	Element* txt = (Element*)App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 });
-	Element* button = (Element*)App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 400, 350, 225, 61 });
 	Element* window = (Element*)App->gui->CreateImage(SDL_Rect{ 31,542,424,454 }, SDL_Rect{ 300,100,424,454 });
+	Element* button = (Element*)App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 400, 350, 225, 61 });
 	Element* wind_title = (Element*)App->gui->CreateTextBox("Window Title", 40, false, SDL_Rect{ 310, 110, 50, 25 });
 	Element* butt_title = (Element*)App->gui->CreateTextBox("Button", 40, false, SDL_Rect{ 410, 360, 50, 25 });
 
@@ -62,6 +62,7 @@ bool j1Scene::Start()
 	window->AddChild(wind_title);
 	button->AddChild(butt_title);
 
+	txt->can_click = true;
 	window->can_drag = true;
 	window->can_click = true;
 	button->can_drag = true;

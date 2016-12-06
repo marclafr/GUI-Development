@@ -57,33 +57,41 @@ bool j1Gui::Update(float dt)
 	int j = screen->childs.count();
 	p2List_item<Element*>* item = screen->childs.start;
 	
-	for (p2List_item<Element*>* all = elements.start; all; all = all->next)
+	for (int i = MAX_PRIORITY; i > 0; i--)
 	{
-		if (all->data->can_click == true && some_is_clicked == false)
+		for (p2List_item<Element*>* all = elements.start; all; all = all->next)
 		{
-			if (mouse.IsInRect(all->data->position) == true)
+			if (all->data->priority == i)
 			{
-				all->data->mouse_inside = true;
+				if (all->data->can_click == true && some_is_clicked == false)
+				{
+					if (mouse.IsInRect(all->data->position) == true)
+					{
+						all->data->mouse_inside = true;
 
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-				{
-					all->data->l_click = true;
-					some_is_clicked = true;
+						if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+						{
+							all->data->l_click = true;
+							some_is_clicked = true;
+						}
+						if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+						{
+							all->data->r_click = true;
+							some_is_clicked = true;
+						}
+					}
+					else
+						all->data->mouse_inside = false;
 				}
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
 				{
-					all->data->r_click = true;
-					some_is_clicked = true;
+					all->data->l_click = false;
+					all->data->mouse_inside = false;
+					all->data->r_click = false;
+					some_is_clicked = false;
 				}
 			}
-		}
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
-		{
-			all->data->l_click = false;
-			all->data->mouse_inside = false;
-			all->data->r_click = false;
-			some_is_clicked = false;
 		}
 	}
 	
