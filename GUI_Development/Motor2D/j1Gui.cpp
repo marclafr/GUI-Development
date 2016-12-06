@@ -57,30 +57,33 @@ bool j1Gui::Update(float dt)
 	int j = screen->childs.count();
 	p2List_item<Element*>* item = screen->childs.start;
 	
-	for (p2List_item<Element*>* a = elements.start; a; a = a->next)
+	for (p2List_item<Element*>* all = elements.start; all; all = all->next)
 	{
-		if (mouse.IsInRect(a->data->position) == true)
+		if (all->data->can_click == true && some_is_clicked == false)
 		{
-			a->data->mouse_inside = true;
+			if (mouse.IsInRect(all->data->position) == true)
+			{
+				all->data->mouse_inside = true;
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-				a->data->l_click = true;
-
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
-				a->data->r_click = true;
-
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-				a->data->l_click = false;
-
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
-				a->data->r_click = false;
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+				{
+					all->data->l_click = true;
+					some_is_clicked = true;
+				}
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+				{
+					all->data->r_click = true;
+					some_is_clicked = true;
+				}
+			}
 		}
 
-		else
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP || App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP)
 		{
-			a->data->mouse_inside = false;
-			a->data->l_click = false;
-			a->data->r_click = false;
+			all->data->l_click = false;
+			all->data->mouse_inside = false;
+			all->data->r_click = false;
+			some_is_clicked = false;
 		}
 	}
 	
@@ -170,38 +173,6 @@ j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect)
 	return ret;
 }
 
-void j1Gui::DragElement(Element* item)
-{
-	Element* temp = nullptr;
-	switch (item->e_type)
-	{
-	case image:
-		temp = (j1Image*)item;
-		break;
-	case button:
-		temp = (j1Button*)item;
-		break;
-	case label:
-		temp = (j1Label*)item;
-		break;
-	case text_box:
-		temp = (j1TextBox*)item;
-		break;
-	case anim_image:
-		temp = (j1AnimatedImage*)item;
-		break;
-	}
-
-	iPoint mouse_motion;
-	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-	temp->position.x += mouse_motion.x;
-	temp->position.y += mouse_motion.y;
-	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
-	{
-		DragElement(childs_item->data);
-	}
-}
-
 bool j1Gui::DeleteElement(int id)
 {
 	p2List_item<Element*>* item = elements.start;
@@ -221,4 +192,21 @@ bool j1Gui::DeleteElement(int id)
 void Element::SetPosition(SDL_Rect& rect)
 {
 	position = rect;
+}
+
+void Element::AddChild(Element* child)
+{
+	childs.add(child);
+	child->parent = this;
+	child->priority = priority + 1;
+}
+
+void Element::DragElement()
+{
+	iPoint mouse_motion;
+	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+	position.x += mouse_motion.x;
+	position.y += mouse_motion.y;
+	for (p2List_item<Element*>* childs_item = childs.start; childs_item; childs_item = childs_item->next)
+		childs_item->data->DragElement();	
 }

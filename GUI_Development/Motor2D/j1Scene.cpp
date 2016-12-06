@@ -55,15 +55,17 @@ bool j1Scene::Start()
 	Element* butt_title = (Element*)App->gui->CreateTextBox("Button", 40, false, SDL_Rect{ 410, 360, 50, 25 });
 
 	screen->parent = nullptr;
-	screen->childs.add(window);			window->parent = screen;
-	screen->childs.add(txt);			txt->parent = screen;
-	screen->childs.add(img);			img->parent = screen;
-	window->childs.add(button);			button->parent = window;
-	window->childs.add(wind_title);		wind_title->parent = window;
-	button->childs.add(butt_title);		butt_title->parent = button;
+	screen->AddChild(window);
+	screen->AddChild(txt);
+	screen->AddChild(img);
+	window->AddChild(button);
+	window->AddChild(wind_title);
+	button->AddChild(butt_title);
 
 	window->can_drag = true;
+	window->can_click = true;
 	button->can_drag = true;
+	button->can_click = true;
 	wind_title->can_drag = true;
 	butt_title->can_drag = true;
 

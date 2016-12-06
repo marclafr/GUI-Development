@@ -28,6 +28,7 @@ enum elem_type
 };
 #define UNKNOWN_NUM 5
 
+#define MAX_PRIORITY 3
 struct Element
 {
 	Element(elem_type type, SDL_Rect& rectangle, int ident) : e_type(type), position(rectangle), id(ident), is_visible(true) {}
@@ -43,9 +44,12 @@ struct Element
 	p2List<Element*> childs;
 	Element* parent;
 	bool can_drag;
+	bool can_click;
 	int priority;
 
 	void SetPosition(SDL_Rect& rect); //set position and size
+	void AddChild(Element* child);
+	void DragElement();
 
 	virtual bool Update(float dt, Element* item)	 { return true; }
 	virtual bool Draw(float dt, Element* item)		 { return true; }
@@ -94,12 +98,12 @@ public:
 	// Gui creation functions
 	p2List<Element*> elements;
 	int element_id = 0;
+	bool some_is_clicked = false;
 	j1Label* CreateLabel(const p2SString& text, int size, SDL_Rect& rect);
 	j1TextBox* CreateTextBox(const p2SString& text, int size, bool is_pw, SDL_Rect& rect);
 	j1Image* CreateImage(SDL_Rect& section, SDL_Rect& rect);
 	j1AnimatedImage* CreateAnimImage(SDL_Rect& section, SDL_Rect& rect);
 	j1Button* CreateButton(SDL_Rect& section, SDL_Rect& rect);
-	void DragElement(Element* item);
 
 	bool DeleteElement(int entity_id);
 

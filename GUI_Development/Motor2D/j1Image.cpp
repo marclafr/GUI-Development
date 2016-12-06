@@ -26,7 +26,7 @@ bool j1Image::Update(float dt, Element* item)
 		childs_item->data->Update(dt, childs_item->data);
 	}
 	if (temp->l_click == true && item->can_drag == true)
-		App->gui->DragElement(item);
+		item->DragElement();
 
 	return true;
 }

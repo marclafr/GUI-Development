@@ -7,7 +7,6 @@ bool j1Button::Draw(float dt, Element* item)
 {
 	j1Button* temp = (j1Button*)item;
 	App->render->Blit(App->gui->GetAtlas(), item->position.x, item->position.y, &temp->section);
-	p2List_item<Element*>* childs_item = item->childs.start;
 	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
 	{
 		childs_item->data->Draw(dt, childs_item->data);
@@ -43,8 +42,9 @@ bool j1Button::Update(float dt, Element* item)
 	{
 		temp->section = { 647, 173, 225, 61 };
 	}
+
 	if (temp->l_click == true && item->can_drag == true)
-		App->gui->DragElement(item);
+		item->DragElement();
 
 	return true;
 }
