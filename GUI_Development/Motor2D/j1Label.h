@@ -11,8 +11,10 @@ public:
 
 	UI_String text;
 
+	void SetText(const char * txt);
+
 public:
-	//bool Draw(float dt, Element* item);
+	bool Draw(float dt, Element* item);
 };
 
 #endif // !__LABEL__

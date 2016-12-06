@@ -45,14 +45,17 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
-	Element* screen = (Element*)App->gui->CreateImage(SDL_Rect{ 0,0,0,0 }, SDL_Rect{ 0,0, 640,480 }); //SCREEN
+	//SCREEN
+	Element* screen = (Element*)App->gui->CreateImage(SDL_Rect{ 0,0,0,0 }, SDL_Rect{ 0,0, 640,480 });
 	
 	Element* img = (Element*)App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
 	Element* txt = (Element*)App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 });
 	Element* window = (Element*)App->gui->CreateImage(SDL_Rect{ 31,542,424,454 }, SDL_Rect{ 300,100,424,454 });
 	Element* button = (Element*)App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 400, 350, 225, 61 });
-	Element* wind_title = (Element*)App->gui->CreateTextBox("Window Title", 40, false, SDL_Rect{ 310, 110, 50, 25 });
-	Element* butt_title = (Element*)App->gui->CreateTextBox("Button", 40, false, SDL_Rect{ 410, 360, 50, 25 });
+	Element* wind_title = (Element*)App->gui->CreateLabel("Window Title", 40, SDL_Rect{ 310, 110, 50, 25 });
+	Element* butt_title = (Element*)App->gui->CreateLabel("Button", 40, SDL_Rect{ 410, 360, 50, 25 });
+	Element* input_image = (Element*)App->gui->CreateImage(SDL_Rect{ 494, 573, 333, 52 }, SDL_Rect{ 325, 275, 333, 52 });
+	Element* input_txt = (Element*)App->gui->CreateTextBox("Input", 20, false, SDL_Rect{ 325, 300, 333, 52 });
 
 	screen->parent = nullptr;
 	screen->AddChild(window);
@@ -61,7 +64,10 @@ bool j1Scene::Start()
 	window->AddChild(button);
 	window->AddChild(wind_title);
 	button->AddChild(butt_title);
+	window->AddChild(input_txt);
+	window->AddChild(input_image);
 
+	input_txt->can_click = true;
 	txt->can_click = true;
 	window->can_drag = true;
 	window->can_click = true;

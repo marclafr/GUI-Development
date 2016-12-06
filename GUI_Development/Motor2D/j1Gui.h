@@ -6,7 +6,6 @@
 
 #define CURSOR_WIDTH 2
 
-
 #include "SDL/include/SDL_rect.h"
 struct SDL_Texture;
 struct _TTF_Font;
@@ -28,7 +27,7 @@ enum elem_type
 };
 #define UNKNOWN_NUM 5
 
-#define MAX_PRIORITY 2
+#define MAX_PRIORITY 3
 struct Element
 {
 	Element(elem_type type, SDL_Rect& rectangle, int ident) : e_type(type), position(rectangle), id(ident), is_visible(true) {}
