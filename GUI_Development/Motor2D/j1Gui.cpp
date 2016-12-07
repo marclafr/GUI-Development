@@ -54,7 +54,6 @@ bool j1Gui::Update(float dt)
 	App->input->GetMousePosition(mouse.x, mouse.y);
 		
 	Element* screen = elements.start->data;
-	int j = screen->childs.count();
 	
 	for (int i = MAX_PRIORITY; i > 0; i--)
 	{
@@ -105,6 +104,15 @@ bool j1Gui::Update(float dt)
 						}
 						j1TextBox* text = (j1TextBox*)all->data;
 						text->text_clicked = true;						
+					}
+				}
+				if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN && all->data->e_type == text_box)
+				{
+					j1TextBox* text = (j1TextBox*)all->data;
+					if (text->text_clicked == true)
+					{
+						text->text.text.Cut(text->text.text.Length() - 1, text->text.text.Length() + 1);
+						text->text_texture = App->font->Print(text->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) });
 					}
 				}
 

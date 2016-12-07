@@ -12,10 +12,10 @@ public:
 
 	bool is_password;
 	bool text_clicked = false;
-
-private:
 	UI_String text;
 	SDL_Texture* text_texture;
+
+private:
 	bool text_changed = true;
 
 public:
