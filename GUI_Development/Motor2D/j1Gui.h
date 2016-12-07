@@ -99,12 +99,12 @@ public:
 	int element_id = 0;
 	bool some_is_clicked = false;
 	j1Label* CreateLabel(const p2SString& text, int size, SDL_Rect& rect);
-	j1TextBox* CreateTextBox(const p2SString& text, int size, bool is_pw, SDL_Rect& rect);
+	j1TextBox* CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect& rect);
 	j1Image* CreateImage(SDL_Rect& section, SDL_Rect& rect);
 	j1AnimatedImage* CreateAnimImage(SDL_Rect& section, SDL_Rect& rect);
 	j1Button* CreateButton(SDL_Rect& section, SDL_Rect& rect);
 
-	bool DeleteElement(int entity_id);
+	bool DeleteElements();
 
 	SDL_Texture* GetAtlas() const;
 

@@ -35,44 +35,13 @@ bool j1TextBox::Update(float dt, Element* item)
 		childs_item->data->Update(dt, childs_item->data);
 	}
 
-	j1TextBox* e_item = (j1TextBox*)item;
-	if (App->input->new_char == true && item->id == 7)
+	j1TextBox* text_box = (j1TextBox*)item;
+	if (App->input->new_char == true && text_box->text_clicked == true)
 	{
-		e_item->text.text += App->input->char_input;
-		text_texture = App->font->Print(e_item->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) });
+		text_box->text.text += App->input->char_input;
+		text_texture = App->font->Print(text_box->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) });
 		App->input->new_char = false;
 	}
-	/*if(item->id == 2)
-		text_texture = App->font->Print(e_item->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) });
-
-	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
-	{
-		j1TextBox* temp = (j1TextBox*)item->data;
-		if (item->data->e_type == text_box)
-		{
-			if (temp->text.text == "Left clicked" || temp->text.text == "Right clicked" || temp->text.text == "Mouse inside" || temp->text.text == "Hello world")
-			{
-				if (item->data->l_click == true)
-				{
-					temp->SetText("Left clicked");
-				}
-				if (item->data->r_click == true)
-				{
-					temp->SetText("Right clicked");
-				}
-				else if (item->data->mouse_inside == true && item->data->l_click == false)
-				{
-					temp->SetText("Mouse inside");
-				}
-
-				if (item->data->mouse_inside == false)
-				{
-					if (temp->GetText() != "Hello world")
-						temp->SetText("Hello world");
-				}
-			}
-		}
-	}*/
-	
+		
 	return true;
 }

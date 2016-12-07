@@ -55,7 +55,6 @@ bool j1Gui::Update(float dt)
 		
 	Element* screen = elements.start->data;
 	int j = screen->childs.count();
-	p2List_item<Element*>* item = screen->childs.start;
 	
 	for (int i = MAX_PRIORITY; i > 0; i--)
 	{
@@ -91,10 +90,29 @@ bool j1Gui::Update(float dt)
 					all->data->r_click = false;
 					some_is_clicked = false;
 				}
+
+				if (all->data->e_type == text_box)
+				{
+					if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && all->data->mouse_inside == true)
+					{
+						for (p2List_item<Element*>* other_texts = elements.start; other_texts; other_texts = other_texts->next)
+						{
+							if (other_texts->data->e_type == text_box)
+							{
+								j1TextBox* other = (j1TextBox*)other_texts->data;
+								other->text_clicked = false;
+							}
+						}
+						j1TextBox* text = (j1TextBox*)all->data;
+						text->text_clicked = true;						
+					}
+				}
+
 			}
 		}
 	}
 	
+	p2List_item<Element*>* item = screen->childs.start;
 	for (int i = 0; screen->childs.count() > i; i++, item = item->next)
 	{
 		ret = item->data->Update(dt, item->data);
@@ -115,10 +133,7 @@ bool j1Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
-	for (int i = 0; i < elements.count(); i++)
-		delete elements[i];
-
-	elements.clear();
+	DeleteElements();
 
 	return true;
 }
@@ -141,10 +156,10 @@ j1Label * j1Gui::CreateLabel(const p2SString& text, int size, SDL_Rect& rect)
 	return ret;
 }
 
-j1TextBox * j1Gui::CreateTextBox(const p2SString& text, int size, bool is_pw, SDL_Rect& rect)
+j1TextBox * j1Gui::CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect& rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1TextBox* ret = new j1TextBox(text, size, false, rect, element_id);
+	j1TextBox* ret = new j1TextBox(text, *tex, size,  false, rect, element_id);
 	if (ret != nullptr)
 		elements.add(ret); element_id++;
 
@@ -181,17 +196,12 @@ j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect)
 	return ret;
 }
 
-bool j1Gui::DeleteElement(int id)
+bool j1Gui::DeleteElements()
 {
-	p2List_item<Element*>* item = elements.start;
-	for (; item; item = item->next)
-	{
-		if (item->data->id == id)
-		{
-			delete item;
-			elements.del(item);
-		}
-	}
+	for (int i = 0; i < elements.count(); i++)
+		delete elements[i];
+
+	elements.clear();
 	return true;
 }
 

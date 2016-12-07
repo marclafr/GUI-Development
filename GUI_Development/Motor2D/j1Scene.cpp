@@ -11,6 +11,7 @@
 #include "j1Gui.h"
 #include "j1Scene.h"
 #include "j1TextBox.h"
+#include "j1Fonts.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -55,7 +56,8 @@ bool j1Scene::Start()
 	Element* wind_title = (Element*)App->gui->CreateLabel("Window Title", 40, SDL_Rect{ 310, 110, 50, 25 });
 	Element* butt_title = (Element*)App->gui->CreateLabel("Button", 40, SDL_Rect{ 410, 360, 50, 25 });
 	Element* input_image = (Element*)App->gui->CreateImage(SDL_Rect{ 494, 573, 333, 52 }, SDL_Rect{ 325, 275, 333, 52 });
-	Element* input_txt = (Element*)App->gui->CreateTextBox("", 20, false, SDL_Rect{ 325, 300, 333, 52 });
+	Element* input_txt = (Element*)App->gui->CreateTextBox("", App->font->Print("", SDL_Color{ (255),(0),(100),(255) }), 20, false, SDL_Rect{ 325, 300, 333, 52 });
+	Element* input_txt2 = (Element*)App->gui->CreateTextBox("ayy", App->font->Print("ayy", SDL_Color{ (255),(0),(100),(255) }), 20, false, SDL_Rect{ 325, 600, 333, 52 });
 
 	screen->parent = nullptr;
 	screen->priority = 0;
@@ -67,7 +69,9 @@ bool j1Scene::Start()
 	button->AddChild(butt_title);
 	window->AddChild(input_txt);
 	window->AddChild(input_image);
+	window->AddChild(input_txt2);
 
+	input_txt2->can_click = true;
 	input_txt->can_click = true;
 	//txt->can_click = true;
 	window->can_drag = true;
