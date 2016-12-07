@@ -3,6 +3,7 @@
 
 #include "j1Gui.h"
 
+//Non-Editable text
 class j1Label :public Element
 {
 public:

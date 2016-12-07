@@ -81,6 +81,8 @@ bool j1Input::PreUpdate()
 			mouse_buttons[i] = KEY_IDLE;
 	}
 
+	SDL_StartTextInput();
+	//TODO 	SDL_StopTextInput();
 	while(SDL_PollEvent(&event) != 0)
 	{
 		switch(event.type)
@@ -108,6 +110,11 @@ bool j1Input::PreUpdate()
 					break;
 				}
 			break;
+
+			case SDL_TEXTINPUT:				
+				char_input = event.text.text;
+				new_char = true;
+				break;
 
 			case SDL_MOUSEBUTTONDOWN:
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;

@@ -3,6 +3,7 @@
 
 #include "j1Gui.h"
 
+//Editable Text
 class j1TextBox :public Element
 {
 public:
@@ -13,6 +14,8 @@ public:
 	
 private:
 	UI_String text;
+	SDL_Texture* text_texture;
+	bool text_changed = true;
 
 public:
 	void SetText(const char* text);

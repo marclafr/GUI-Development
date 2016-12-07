@@ -67,6 +67,9 @@ public:
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
+	
+	char* char_input;
+	bool new_char;
 
 private:
 	bool		windowEvents[WE_COUNT];
