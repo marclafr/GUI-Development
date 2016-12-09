@@ -106,7 +106,7 @@ bool j1Gui::Update(float dt)
 						text->text_clicked = true;						
 					}
 				}
-				if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN && all->data->e_type == text_box)
+				/*if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN && all->data->e_type == text_box)
 				{
 					j1TextBox* text = (j1TextBox*)all->data;
 					if (text->text_clicked == true)
@@ -114,7 +114,7 @@ bool j1Gui::Update(float dt)
 						text->text.text.Cut(text->text.text.Length() - 1, text->text.text.Length());
 						text->text_texture = App->font->Print(text->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text->text.font);
 					}
-				}
+				}*/		//BACKSPACE DONE TOO EARLY MUST CORRECT THIS
 
 			}
 		}

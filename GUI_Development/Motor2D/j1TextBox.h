@@ -18,6 +18,7 @@ public:
 private:
 	bool text_changed = true;
 	int write_pos = 0;
+	p2SString temp;
 
 public:
 	void SetText(const char* text);

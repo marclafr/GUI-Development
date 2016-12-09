@@ -6,7 +6,9 @@
 
 j1TextBox::j1TextBox(p2SString txt, SDL_Texture& tex, int size, bool is_password, SDL_Rect& rect, int id) : text(txt, size), text_texture(&tex), is_password(is_password), Element(elem_type::text_box, rect, id)
 {
-	text.SetFont("fonts/open_sans/OpenSans-Regular.ttf", 20);
+	text.SetFont("fonts/open_sans/OpenSans-Regular.ttf", size);
+	if (txt != NULL)
+		write_pos = txt.Length();
 }
 
 j1TextBox::~j1TextBox()
@@ -27,9 +29,16 @@ const char * j1TextBox::GetText()
 
 bool j1TextBox::Draw(float dt, Element* item)
 {
-	j1TextBox* temp = (j1TextBox*)item;
+	j1TextBox* text_box = (j1TextBox*)item;
 
 	App->render->Blit(text_texture, item->position.x, item->position.y);
+	if (text_box->text_clicked == true)
+	{
+		int w, h;
+		text_box->text.text.SubStringPre(0, write_pos, temp);
+		App->font->CalcSize(temp.GetString(), w, h, text_box->text.font);
+		App->render->DrawQuad(SDL_Rect{ item->position.x + w, item->position.y + h / 2, 2, h }, 255, 255, 255);
+	}
 	
 	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
 	{

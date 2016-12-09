@@ -109,13 +109,13 @@ public:
 	// Operators
 	char& operator[](unsigned int index)
 	{
-		assert(index < Length());
+		assert(index <= Length());
 		return str[index];
 	}
 
 	const char& operator[](unsigned int index) const
 	{
-		assert(index < Length());
+		assert(index <= Length());
 		return str[index];
 	}
 
@@ -365,6 +365,26 @@ public:
 		}
 		else
 			return 0;
+	}
+
+	//	
+	bool SubStringPre(unsigned int start, unsigned int end, p2SString& buffer)
+	{
+		if (str != NULL)
+		{
+			start = MIN(start, size);
+			end = (end == 0) ? size : MIN(end, size);
+			uint s = end - start;
+			int i = start;
+			while (i < s)
+			{
+				buffer[i] = str[i];
+				i++;
+			}
+			return true;
+		}
+		else
+			return false;
 	}
 
 private:
