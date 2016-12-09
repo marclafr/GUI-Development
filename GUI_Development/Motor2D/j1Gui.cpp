@@ -67,12 +67,12 @@ bool j1Gui::Update(float dt)
 					{
 						all->data->mouse_inside = true;
 
-						if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+						if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 						{
 							all->data->l_click = true;
 							some_is_clicked = true;
 						}
-						if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+						if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 						{
 							all->data->r_click = true;
 							some_is_clicked = true;
@@ -111,8 +111,8 @@ bool j1Gui::Update(float dt)
 					j1TextBox* text = (j1TextBox*)all->data;
 					if (text->text_clicked == true)
 					{
-						text->text.text.Cut(text->text.text.Length() - 1, text->text.text.Length() + 1);
-						text->text_texture = App->font->Print(text->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) });
+						text->text.text.Cut(text->text.text.Length() - 1, text->text.text.Length());
+						text->text_texture = App->font->Print(text->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text->text.font);
 					}
 				}
 
@@ -235,4 +235,17 @@ void Element::DragElement()
 	position.y += mouse_motion.y;
 	for (p2List_item<Element*>* childs_item = childs.start; childs_item; childs_item = childs_item->next)
 		childs_item->data->DragElement();	
+}
+
+bool UI_String::SetFont(const char * path, int size)
+{
+	{
+		if (path != NULL)
+		{
+			font = App->font->Load(path, size);
+			return true;
+		}
+		else
+			return false;
+	}
 }

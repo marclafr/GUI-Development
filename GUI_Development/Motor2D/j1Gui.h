@@ -45,6 +45,7 @@ struct Element
 	bool can_drag;
 	bool can_click;
 	int priority;
+		//slider -> viewport
 
 	void SetPosition(SDL_Rect& rect); //set position and size
 	void AddChild(Element* child);
@@ -65,6 +66,7 @@ struct UI_String
 	p2SString text;
 	int text_size;
 	_TTF_Font* font;
+	bool SetFont(const char* path, int size = 12);
 };
 // ---------------------------------------------------
 

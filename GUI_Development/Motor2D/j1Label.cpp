@@ -3,6 +3,16 @@
 #include "j1App.h"
 #include "j1Fonts.h"
 
+j1Label::j1Label(p2SString txt, int size, SDL_Rect rect, int id) : text(txt, size), Element(elem_type::label, rect, id)
+{
+	text.SetFont("fonts/open_sans/OpenSans-Regular.ttf", 20);
+}
+
+j1Label::~j1Label()
+{
+
+}
+
 void j1Label::SetText(const char * txt)
 {
 	text.text = txt;	

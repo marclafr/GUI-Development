@@ -107,6 +107,18 @@ public:
 	}
 
 	// Operators
+	char& operator[](unsigned int index)
+	{
+		assert(index < Length());
+		return str[index];
+	}
+
+	const char& operator[](unsigned int index) const
+	{
+		assert(index < Length());
+		return str[index];
+	}
+
 	bool operator== (const p2SString& string) const
 	{
 		return strcmp(string.str, str) == 0;
