@@ -35,7 +35,7 @@ bool j1TextBox::Draw(float dt, Element* item)
 	if (text_box->text_clicked == true)
 	{
 		int w, h;
-		text_box->text.text.SubStringPre(0, write_pos, temp);
+		text_box->text.text.StringSegment(0, write_pos, temp);
 		App->font->CalcSize(temp.GetString(), w, h, text_box->text.font);
 		App->render->DrawQuad(SDL_Rect{ item->position.x + w, item->position.y + h / 2, 2, h }, 255, 255, 255);
 	}
@@ -75,6 +75,16 @@ bool j1TextBox::Update(float dt, Element* item)
 		if (write_pos > text_box->text.text.Length())
 			write_pos = text_box->text.text.Length();
 	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
+	{
+		if (text_box->text_clicked == true)
+		{
+			text_box->text.text.DeleteChar(write_pos);
+			text_box->text_texture = App->font->Print(text_box->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text_box->text.font);
+			text_box->write_pos--;
+		}
+	}		//BACKSPACE DONE TOO EARLY MUST CORRECT THIS
 		
 	return true;
 }

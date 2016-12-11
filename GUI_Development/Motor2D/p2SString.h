@@ -260,6 +260,21 @@ public:
 		return true;
 	}
 
+	//Delete a char located in the index
+	bool DeleteChar(uint index) {
+
+		if (index >= size)return false;
+
+		for (uint k = index; k < size; k++) {
+
+			str[k] = str[k + 1];
+
+		}
+		size--;
+		index--;
+		return true;
+	}
+
 	void Trim()
 	{
 		// cut right --
@@ -368,7 +383,7 @@ public:
 	}
 
 	//	
-	bool SubStringPre(unsigned int start, unsigned int end, p2SString& buffer)
+	bool StringSegment(unsigned int start, unsigned int end, p2SString& buffer)
 	{
 		if (str != NULL)
 		{
@@ -381,10 +396,8 @@ public:
 				buffer[i] = str[i];
 				i++;
 			}
-			return true;
 		}
-		else
-			return false;
+			return true;
 	}
 
 private:
