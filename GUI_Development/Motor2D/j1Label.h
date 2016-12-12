@@ -11,6 +11,7 @@ public:
 	~j1Label();
 
 	UI_String text;
+	SDL_Texture* text_texture;
 
 	void SetText(const char * txt);
 

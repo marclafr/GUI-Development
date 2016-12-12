@@ -31,13 +31,13 @@ bool j1TextBox::Draw(float dt, Element* item)
 {
 	j1TextBox* text_box = (j1TextBox*)item;
 
-	App->render->Blit(text_texture, item->position.x, item->position.y);
+	App->render->Blit(text_texture, item->position.x - App->render->camera.x, item->position.y - App->render->camera.y);
 	if (text_box->text_clicked == true)
 	{
 		int w, h;
-		text_box->text.text.StringSegment(0, write_pos, temp);
-		App->font->CalcSize(temp.GetString(), w, h, text_box->text.font);
-		App->render->DrawQuad(SDL_Rect{ item->position.x + w, item->position.y + h / 2, 2, h }, 255, 255, 255);
+		text_box->text.text.StringSegment(0, write_pos, partial_text);
+		App->font->CalcSize(partial_text.GetString(), w, h, text_box->text.font);
+		App->render->DrawQuad(SDL_Rect{ item->position.x + w - App->render->camera.x, item->position.y + h / 2 - App->render->camera.y, 2, h }, 255, 255, 255);
 	}
 	
 	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
@@ -58,7 +58,7 @@ bool j1TextBox::Update(float dt, Element* item)
 	j1TextBox* text_box = (j1TextBox*)item;
 	if (App->input->new_char == true && text_box->text_clicked == true)
 	{
-		text_box->text.text += App->input->char_input;
+		text_box->text.text += App->input->char_input;	//Must do a function like IntroduceInput, += only adds it to the end.
 		text_texture = App->font->Print(text_box->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text_box->text.font);
 		write_pos++;
 		App->input->new_char = false;
@@ -84,7 +84,7 @@ bool j1TextBox::Update(float dt, Element* item)
 			text_box->text_texture = App->font->Print(text_box->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text_box->text.font);
 			text_box->write_pos--;
 		}
-	}		//BACKSPACE DONE TOO EARLY MUST CORRECT THIS
+	}
 		
 	return true;
 }

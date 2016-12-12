@@ -6,7 +6,7 @@
 bool j1Image::Draw(float dt, Element* item)
 {
 	j1Image* temp = (j1Image*)item;
-	App->render->Blit(App->gui->GetAtlas(), item->position.x, item->position.y, &temp->section);
+	App->render->Blit(App->gui->GetAtlas(), item->position.x - App->render->camera.x, item->position.y - App->render->camera.y, &temp->section);
 	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
 	{
 		childs_item->data->Draw(dt, childs_item->data);

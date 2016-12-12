@@ -16,9 +16,9 @@ public:
 	SDL_Texture* text_texture;
 
 private:
+	p2SString partial_text;
 	bool text_changed = true;
 	int write_pos = 0;
-	p2SString temp;
 
 public:
 	void SetText(const char* text);

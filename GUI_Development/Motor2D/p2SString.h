@@ -383,21 +383,18 @@ public:
 	}
 
 	//	
-	bool StringSegment(unsigned int start, unsigned int end, p2SString& buffer)
+	bool StringSegment(unsigned int start, unsigned int end, p2SString& temp)
 	{
-		if (str != NULL)
-		{
-			start = MIN(start, size);
-			end = (end == 0) ? size : MIN(end, size);
-			uint s = end - start;
-			int i = start;
-			while (i < s)
-			{
-				buffer[i] = str[i];
-				i++;
-			}
-		}
-			return true;
+		if (str[0] == '\0')
+			return false;
+		
+		if (end >= Length())
+			end = Length();
+
+		temp = str;
+		temp[end] = '\0';
+
+		return true;
 	}
 
 private:
