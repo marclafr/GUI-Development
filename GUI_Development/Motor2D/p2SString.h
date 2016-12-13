@@ -261,17 +261,16 @@ public:
 	}
 
 	//Delete a char located in the index
-	bool DeleteChar(uint index) {
+	bool DeleteChar(uint index) 
+	{
+		if (index >= size)
+			return false;
 
-		if (index >= size)return false;
-
-		for (uint k = index; k < size; k++) {
-
+		for (uint k = index; k < size; k++)
 			str[k] = str[k + 1];
-
-		}
+	
 		size--;
-		index--;
+		str[size] = '\0';
 		return true;
 	}
 
@@ -394,6 +393,40 @@ public:
 		temp = str;
 		temp[end] = '\0';
 
+		return true;
+	}
+
+	bool InsertString(int position, p2SString new_buffer)
+	{
+		uint len = Length();
+
+		if (position < 0)
+			position = 0;
+		if (position > len + 1)
+			position = len + 1;
+
+		if ((position >= 0) && (position <= len + 1))
+		{
+			uint new_buffer_len = new_buffer.Length();
+			uint need_size = new_buffer_len + len + 1;
+
+			//we have enough memory allocated?
+			if (need_size > size)
+			{
+				char* tmp = str;
+				Alloc(need_size);
+				strcpy_s(str, size, tmp);
+				delete[] tmp;
+			}
+
+			// move our string to the end
+			for (int j = len, i = need_size - 1; i >= position; i--)
+				str[i] = str[j--];
+
+			// prefix new string
+			for (int i = 0; i < new_buffer_len; i++)
+				str[position + i] = new_buffer.str[i];
+		}
 		return true;
 	}
 

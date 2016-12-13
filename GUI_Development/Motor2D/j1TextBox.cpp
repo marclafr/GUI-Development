@@ -58,31 +58,29 @@ bool j1TextBox::Update(float dt, Element* item)
 	j1TextBox* text_box = (j1TextBox*)item;
 	if (App->input->new_char == true && text_box->text_clicked == true)
 	{
-		text_box->text.text += App->input->char_input;	//Must do a function like IntroduceInput, += only adds it to the end.
+		text_box->text.text.InsertString(write_pos, App->input->char_input);
 		text_texture = App->font->Print(text_box->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text_box->text.font);
 		write_pos++;
 		App->input->new_char = false;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && text_box->text_clicked == true)
 	{
-		write_pos--;
-		if (write_pos < 0)
-			write_pos = 0;
+		if (write_pos > 0)
+			write_pos--;
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && text_box->text_clicked == true)
 	{
-		write_pos++;
-		if (write_pos > text_box->text.text.Length())
-			write_pos = text_box->text.text.Length();
+		if (write_pos < text_box->text.text.Length())
+			write_pos++;
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)
 	{
-		if (text_box->text_clicked == true)
+		if (text_box->text_clicked == true && write_pos > 0)
 		{
+			text_box->write_pos--; 
 			text_box->text.text.DeleteChar(write_pos);
 			text_box->text_texture = App->font->Print(text_box->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text_box->text.font);
-			text_box->write_pos--;
 		}
 	}
 		
