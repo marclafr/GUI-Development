@@ -25,10 +25,20 @@ bool j1Slider::Update(float dt, Element* item)
 
 	j1Slider* slider = (j1Slider*)item;
 	if (item->l_click == true && slider->slider_type == VERTICAL)
+	{
 		DragVerticalSlider();
+		for (p2List_item<Element*>* scroll_item = slider->scroll_elements.start; scroll_item; scroll_item = scroll_item->next)
+		{
+			if(slider->Max_reached==false && slider->Min_reached==false)
+				scroll_item->data->DragElementAxisY();
+		}
+	}
 
 	if (item->l_click == true && slider->slider_type == HORITZONTAL)
+	{
 		DragHoritzontalSlider();
+	
+	}
 
 	return true;
 }
@@ -50,18 +60,28 @@ void j1Slider::DragVerticalSlider()
 	iPoint mouse_motion;
 	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 	if (position.y >= Max_slider.y)
+	{
 		position.y = Max_slider.y;
-
+		Max_reached = true;
+	}
 	if (position.y <= Min_slider.y)
+	{
 		position.y = Min_slider.y;
-
+		Min_reached = true;
+	}
 	if (position.y >= Min_slider.y && position.y <= Max_slider.y)
+	{
 		position.y += mouse_motion.y;
+		Max_reached = false;
+		Min_reached = false;
+	}
 }
 
 void j1Slider::DragHoritzontalSlider()
 {
+	/*TODO
 	iPoint mouse_motion;
 	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 	position.x += mouse_motion.x;
+	*/
 }

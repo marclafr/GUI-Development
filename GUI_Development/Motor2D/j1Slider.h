@@ -21,7 +21,9 @@ public:
 	SDL_Rect back_rect;
 	SDL_Rect back_section;
 	iPoint Max_slider;
+	bool Max_reached;
 	iPoint Min_slider;
+	bool Min_reached;
 	
 public:
 	bool Draw(float dt, Element* item);

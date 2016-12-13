@@ -12,6 +12,7 @@
 #include "j1Scene.h"
 #include "j1TextBox.h"
 #include "j1Fonts.h"
+#include "j1Slider.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -59,7 +60,8 @@ bool j1Scene::Start()
 	Element* input_txt = (Element*)App->gui->CreateTextBox("", App->font->Print("", SDL_Color{ (255),(0),(100),(255) }), 20, false, SDL_Rect{ 325, 300, 333, 52 });
 	Element* input_txt2 = (Element*)App->gui->CreateTextBox("ayy", App->font->Print("ayy", SDL_Color{ (255),(0),(100),(255) }), 20, false, SDL_Rect{ 325, 600, 333, 52 });
 	Element* slider = (Element*)App->gui->CreateSlider(SDL_Rect{ 1001, 882, 17, 17 }, SDL_Rect{ 100, 100, 17, 17 }, SDL_Rect{ 100,100,17,148 }, SDL_Rect{ 986,874,11,148 }, VERTICAL);
-	
+	Element* image_slider = (Element*)App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 503 }, SDL_Rect{ 117, 100, 328, 103 });
+																					//103
 	screen->parent = nullptr;
 	screen->priority = 0;
 	screen->AddChild(window);
@@ -72,6 +74,9 @@ bool j1Scene::Start()
 	window->AddChild(input_image);
 	window->AddChild(input_txt2);
 	screen->AddChild(slider);
+	screen->AddChild(image_slider);
+	j1Slider* slider1 = (j1Slider*)slider;
+	slider1->scroll_elements.add(image_slider);
 
 	input_txt2->can_click = true;
 	input_txt->can_click = true;
