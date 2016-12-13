@@ -11,6 +11,7 @@
 #include "j1Label.h"
 #include "j1AnimatedImage.h"
 #include "j1Button.h"
+#include "j1Slider.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -194,6 +195,16 @@ j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect)
 	return ret;
 }
 
+j1Slider * j1Gui::CreateSlider(SDL_Rect & section, SDL_Rect & rect, SDL_Rect & back_rect, SDL_Rect & back_section, SliderType s_type)
+{
+	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
+	j1Slider* ret = new j1Slider(section, rect, back_rect, back_section, s_type, element_id);
+	if (ret != nullptr)
+		elements.add(ret); element_id++;
+
+	return ret;
+}
+
 bool j1Gui::DeleteElements()
 {
 	for (int i = 0; i < elements.count(); i++)
@@ -225,6 +236,20 @@ void Element::DragElement()
 	position.y += mouse_motion.y;
 	for (p2List_item<Element*>* childs_item = childs.start; childs_item; childs_item = childs_item->next)
 		childs_item->data->DragElement();	
+}
+
+void Element::DragElementAxisX()
+{
+	iPoint mouse_motion;
+	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+	position.x += mouse_motion.x;
+}
+
+void Element::DragElementAxisY()
+{
+	iPoint mouse_motion;
+	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
+	position.y += mouse_motion.y;
 }
 
 bool UI_String::SetFont(const char * path, int size)

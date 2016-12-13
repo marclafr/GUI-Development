@@ -15,6 +15,13 @@ class j1TextBox;
 class j1Button;
 class j1AnimatedImage;
 class j1Label;
+class j1Slider;
+
+enum SliderType
+{
+	VERTICAL = 0,
+	HORITZONTAL
+};
 
 enum elem_type
 {
@@ -23,9 +30,10 @@ enum elem_type
 	image,
 	anim_image,
 	button,
+	slider,
 	unknown
 };
-#define UNKNOWN_NUM 5
+#define UNKNOWN_NUM 6
 
 #define MAX_PRIORITY 3
 struct Element
@@ -45,11 +53,12 @@ struct Element
 	bool can_drag;
 	bool can_click;
 	int priority;
-		//slider -> viewport
 
 	void SetPosition(SDL_Rect& rect); //set position and size
 	void AddChild(Element* child);
 	void DragElement();
+	void DragElementAxisX();
+	void DragElementAxisY();
 
 	virtual bool Update(float dt, Element* item)	 { return true; }
 	virtual bool Draw(float dt, Element* item)		 { return true; }
@@ -105,11 +114,12 @@ public:
 	j1Image* CreateImage(SDL_Rect& section, SDL_Rect& rect);
 	j1AnimatedImage* CreateAnimImage(SDL_Rect& section, SDL_Rect& rect);
 	j1Button* CreateButton(SDL_Rect& section, SDL_Rect& rect);
+	j1Slider* CreateSlider(SDL_Rect& section, SDL_Rect& rect, SDL_Rect & back_rect, SDL_Rect & back_section, SliderType s_type);
 
 	bool DeleteElements();
 
 	SDL_Texture* GetAtlas() const;
-
+		
 private:
 
 	SDL_Texture* atlas;

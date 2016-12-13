@@ -13,7 +13,6 @@ j1TextBox::j1TextBox(p2SString txt, SDL_Texture& tex, int size, bool is_password
 
 j1TextBox::~j1TextBox()
 {
-
 }
 
 void j1TextBox::SetText(const char * txt)
