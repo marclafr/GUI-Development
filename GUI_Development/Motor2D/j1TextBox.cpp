@@ -58,6 +58,10 @@ bool j1TextBox::Update(float dt, Element* item)
 	j1TextBox* text_box = (j1TextBox*)item;
 	if (App->input->new_char == true && text_box->text_clicked == true)
 	{
+		//if you write way fast write_pos gets exceded
+		if (write_pos > text_box->text.text.Length())
+			write_pos = text_box->text.text.Length();
+
 		text_box->text.text.InsertString(write_pos, App->input->char_input);
 		text_texture = App->font->Print(text_box->text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text_box->text.font);
 		write_pos++;
