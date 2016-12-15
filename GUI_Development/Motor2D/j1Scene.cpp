@@ -51,7 +51,7 @@ bool j1Scene::Start()
 	Element* screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 768, 579 }, false);
 	screen->parent = nullptr;
 	screen->priority = 0;
-
+	/*
 	//EXERCISE 1
 	Element* background = (Element*)App->gui->CreateImage({ 970, 1844, 768, 579 }, { 0, 0, 768, 579 }, false);
 	screen->AddChild(background);
@@ -61,6 +61,7 @@ bool j1Scene::Start()
 	blue_sel_box = App->gui->CreateImage({ 1485, 110, 72, 109 }, { 240, 80, 288, 191 }, true);
 	screen->AddChild(blue_sel_box);
 	blue_sel_box->is_interactive = true;
+	blue_sel_box->tab_focus = true;
 	//--
 
 	//EXERCISE 3
@@ -75,20 +76,25 @@ bool j1Scene::Start()
 	player2_char = App->gui->CreateImage({ 1093, 605, 168, 279 }, { 543, 61, 168, 279 }, false);
 	red_sel_box->AddChild(player2_char);
 	//--
-
-	/*
-	Element* img = (Element*)App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
-	//Element* txt = (Element*)App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 });
-	Element* window = (Element*)App->gui->CreateImage(SDL_Rect{ 31,542,424,454 }, SDL_Rect{ 300,100,424,454 });
-	Element* button = (Element*)App->gui->CreateButton(SDL_Rect{ 647, 173, 225, 61 }, SDL_Rect{ 400, 350, 225, 61 });
-	Element* wind_title = (Element*)App->gui->CreateLabel("Window Title", 40, SDL_Rect{ 310, 110, 50, 25 });
-	Element* butt_title = (Element*)App->gui->CreateLabel("Button", 40, SDL_Rect{ 410, 360, 50, 25 });
-	Element* input_image = (Element*)App->gui->CreateImage(SDL_Rect{ 494, 573, 333, 52 }, SDL_Rect{ 325, 275, 333, 52 });
-	Element* input_txt = (Element*)App->gui->CreateTextBox("", App->font->Print("", SDL_Color{ (255),(0),(100),(255) }), 20, false, SDL_Rect{ 325, 300, 333, 52 });
-	Element* input_txt2 = (Element*)App->gui->CreateTextBox("ayy", App->font->Print("ayy", SDL_Color{ (255),(0),(100),(255) }), 20, false, SDL_Rect{ 325, 600, 333, 52 });
-	Element* slider = (Element*)App->gui->CreateSlider(SDL_Rect{ 1001, 882, 17, 17 }, SDL_Rect{ 100, 100, 17, 17 }, SDL_Rect{ 100,100,17,148 }, SDL_Rect{ 986,874,11,148 }, VERTICAL);
-	Element* image_slider = (Element*)App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 503 }, SDL_Rect{ 117, 100, 328, 103 });
-																					//103
+	*/
+	
+	Element* img = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 },  { 800, 100, 328, 103 },false);
+	//Element* txt = (Element*)App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 }, false);
+	Element* window = (Element*)App->gui->CreateImage({ 31,542,424,454 }, { 300,100,424,454 },false);
+	Element* button = (Element*)App->gui->CreateButton({ 647, 173, 225, 61 }, { 400, 350, 225, 61 },false);
+	Element* wind_title = (Element*)App->gui->CreateLabel("Window Title", 40, { 310, 110, 50, 25 });
+	Element* butt_title = (Element*)App->gui->CreateLabel("Button", 40, { 410, 360, 50, 25 });
+	Element* input_image = (Element*)App->gui->CreateImage({ 494, 573, 333, 52 }, { 325, 275, 333, 52 }, false);
+	Element* input_txt = (Element*)App->gui->CreateTextBox("", App->font->Print("", { (255),(0),(100),(255) }), 20, false, { 325, 300, 333, 52 },false);
+	Element* input_txt2 = (Element*)App->gui->CreateTextBox("ayy", App->font->Print("ayy", { (255),(0),(100),(255) }), 20, false, { 325, 600, 333, 52 }, false);
+	Element* slider = (Element*)App->gui->CreateSlider({ 1001, 882, 17, 17 }, { 100, 100, 17, 17 }, { 100,100,17,148 }, { 986,874,11,148 }, VERTICAL);
+	Element* image_slider = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 100, 328, 103 }, false);
+	Element* image_slider2 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 203, 328, 103 }, false);
+	Element* image_slider3 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 306, 328, 103 }, false);
+	Element* image_slider4 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 409, 328, 103 }, false);
+	Element* image_slider5 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 512, 328, 103 }, false);
+	Element* image_slider6 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 615, 328, 103 }, false);
+		
 	screen->parent = nullptr;
 	screen->priority = 0;
 	screen->AddChild(window);
@@ -101,9 +107,14 @@ bool j1Scene::Start()
 	window->AddChild(input_image);
 	window->AddChild(input_txt2);
 	screen->AddChild(slider);
-	screen->AddChild(image_slider);
+
 	j1Slider* slider1 = (j1Slider*)slider;
-	slider1->scroll_elements.add(image_slider);
+	slider1->AddScrollElement(image_slider);
+	slider1->AddScrollElement(image_slider2);
+	slider1->AddScrollElement(image_slider3);
+	slider1->AddScrollElement(image_slider4);
+	slider1->AddScrollElement(image_slider5);
+	slider1->AddScrollElement(image_slider6);
 
 	input_txt2->can_click = true;
 	input_txt->can_click = true;
@@ -116,7 +127,7 @@ bool j1Scene::Start()
 	butt_title->can_drag = true;
 	slider->can_click = true;
 	slider->can_drag = true;
-	*/
+	
 
 	return true;
 }
@@ -155,7 +166,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	//EXERCISE 2 && 3
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		if (blue_sel_box->tab_focus == true && blue_sel_box->position.x < 456)
 		{
@@ -206,7 +217,7 @@ bool j1Scene::Update(float dt)
 			red_sel_box->position.y += 95;
 			player2_char->section.y += 279;
 		}
-	}
+	}*/
 
 	return true;
 }

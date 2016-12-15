@@ -13,7 +13,7 @@ public:
 	//slider -> viewport
 	SDL_Rect section;
 	SDL_Rect view_slider;
-	p2List<Element*> scroll_elements;
+
 
 	bool slider_selected;
 	SliderType slider_type;
@@ -29,9 +29,15 @@ public:
 	bool Draw(float dt, Element* item);
 	bool Update(float dt, Element* item);
 
+	bool AddScrollElement(Element* item);
+
 private:
 	void DragVerticalSlider();
 	void DragHoritzontalSlider();
+
+	p2List<Element*> scroll_elements;
+	int scroll_elements_distance = 0;
+	SDL_Rect view_port;
 
 };
 

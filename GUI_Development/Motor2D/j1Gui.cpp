@@ -167,7 +167,7 @@ SDL_Texture* j1Gui::GetAtlas() const
 
 // class Gui ---------------------------------------------------
 
-j1Label * j1Gui::CreateLabel(const p2SString& text, int size, SDL_Rect& rect)
+j1Label * j1Gui::CreateLabel(const p2SString& text, int size, SDL_Rect rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	j1Label* ret = new j1Label(text, size, rect, element_id);
@@ -177,7 +177,7 @@ j1Label * j1Gui::CreateLabel(const p2SString& text, int size, SDL_Rect& rect)
 	return ret;
 }
 
-j1TextBox * j1Gui::CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect& rect, bool tabable)
+j1TextBox * j1Gui::CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect rect, bool tabable)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	j1TextBox* ret = nullptr;
@@ -214,7 +214,7 @@ j1Image * j1Gui::CreateImage(SDL_Rect section, SDL_Rect rect, bool tabable)
 	}
 }
 
-j1AnimatedImage * j1Gui::CreateAnimImage(SDL_Rect& section, SDL_Rect& rect)
+j1AnimatedImage * j1Gui::CreateAnimImage(SDL_Rect section, SDL_Rect rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	j1AnimatedImage* ret = new j1AnimatedImage(section, rect, element_id);
@@ -224,7 +224,7 @@ j1AnimatedImage * j1Gui::CreateAnimImage(SDL_Rect& section, SDL_Rect& rect)
 	return ret;
 }
 
-j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect, bool tabable)
+j1Button * j1Gui::CreateButton(SDL_Rect section, SDL_Rect rect, bool tabable)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	if (tabable == true)
@@ -242,7 +242,7 @@ j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect, bool tabable)
 	}
 }
 
-j1Slider * j1Gui::CreateSlider(SDL_Rect & section, SDL_Rect & rect, SDL_Rect & back_rect, SDL_Rect & back_section, SliderType s_type)
+j1Slider * j1Gui::CreateSlider(SDL_Rect section, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	j1Slider* ret = new j1Slider(section, rect, back_rect, back_section, s_type, element_id);
@@ -285,18 +285,18 @@ void Element::DragElement()
 		childs_item->data->DragElement();
 }
 
-void Element::DragElementAxisX()
+void Element::DragElementAxisX(float movement)
 {
 	iPoint mouse_motion;
 	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-	position.x += mouse_motion.x;
+	position.x -= mouse_motion.x/movement;
 }
 
-void Element::DragElementAxisY()
+void Element::DragElementAxisY(float movement)
 {
 	iPoint mouse_motion;
 	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-	position.y += mouse_motion.y;
+	position.y -= mouse_motion.y/movement;
 }
 
 bool UI_String::SetFont(const char * path, int size)

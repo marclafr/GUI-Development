@@ -63,8 +63,8 @@ struct Element
 	void SetPosition(SDL_Rect& rect); //set position and size
 	void AddChild(Element* child);
 	void DragElement();
-	void DragElementAxisX();
-	void DragElementAxisY();
+	void DragElementAxisX(float movement);
+	void DragElementAxisY(float movement);
 
 	virtual bool Update(float dt, Element* item) { return true; }
 	virtual bool Draw(float dt, Element* item) { return true; }
@@ -116,12 +116,12 @@ public:
 	int element_id = 0;
 	uint tab_order_max = 0;
 	bool some_is_clicked = false;
-	j1Label* CreateLabel(const p2SString& text, int size, SDL_Rect& rect);
-	j1TextBox* CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect& rect, bool tabable);
+	j1Label* CreateLabel(const p2SString& text, int size, SDL_Rect rect);
+	j1TextBox* CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect rect, bool tabable);
 	j1Image* CreateImage(SDL_Rect section, SDL_Rect rect, bool tabable);
-	j1AnimatedImage* CreateAnimImage(SDL_Rect& section, SDL_Rect& rect);
-	j1Button* CreateButton(SDL_Rect& section, SDL_Rect& rect, bool tabable);
-	j1Slider* CreateSlider(SDL_Rect& section, SDL_Rect& rect, SDL_Rect & back_rect, SDL_Rect & back_section, SliderType s_type);
+	j1AnimatedImage* CreateAnimImage(SDL_Rect section, SDL_Rect rect);
+	j1Button* CreateButton(SDL_Rect section, SDL_Rect rect, bool tabable);
+	j1Slider* CreateSlider(SDL_Rect section, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type);
 
 	bool DeleteElements();
 
