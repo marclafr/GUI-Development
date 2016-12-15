@@ -4,7 +4,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 
-j1Slider::j1Slider(const SDL_Rect sect, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int id) : section(sect), slider_type(s_type), back_rect(back_rect), back_section(back_section), Min_slider{ rect.x, rect.y }, Element(elem_type::button, rect, 0, id)
+j1Slider::j1Slider(const SDL_Rect sect, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int viewport_distance, int id) : section(sect), slider_type(s_type), back_rect(back_rect), back_section(back_section), Min_slider{ rect.x, rect.y }, viewport_distance(viewport_distance), Element(elem_type::button, rect, 0, id)
 {
 	if (s_type == VERTICAL)
 		Max_slider = { rect.x, rect.y + back_rect.h };
@@ -32,7 +32,7 @@ bool j1Slider::Update(float dt, Element* item)
 		{
 			if (slider->Max_reached == false && slider->Min_reached == false)
 			{
-				float movement = (float)this->back_rect.h / scroll_elements_distance;
+				float movement = (float)this->back_rect.h / (scroll_elements_distance - this->back_rect.h);
 				scroll_item->data->DragElementAxisY(movement);
 			}
 		}
@@ -66,8 +66,11 @@ bool j1Slider::Draw(float dt, Element* item)
 	App->render->Blit(App->gui->GetAtlas(), item->position.x - App->render->camera.x, item->position.y - App->render->camera.y, &slider->section);
 	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
 		childs_item->data->Draw(dt, childs_item->data);
-	
-	view_port = { 117, 100, 328, 303 };
+	if (this->slider_type == VERTICAL)
+		view_port = { this->Min_slider.x, this->Min_slider.y, viewport_distance, this->Max_slider.y - this->Min_slider.y};
+	else if (this->slider_type == HORITZONTAL)
+		view_port = { this->Min_slider.x, this->Min_slider.y, this->Max_slider.x - this->Min_slider.x, viewport_distance };
+
 	SDL_RenderSetViewport(App->render->renderer, &view_port);
 	for (p2List_item<Element*>* scroll_elem = scroll_elements.start; scroll_elem; scroll_elem = scroll_elem->next)
 		scroll_elem->data->Draw(dt, scroll_elem->data);

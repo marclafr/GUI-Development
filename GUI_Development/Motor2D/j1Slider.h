@@ -7,7 +7,7 @@
 class j1Slider :public Element
 {
 public:
-	j1Slider(const SDL_Rect sect, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int id);
+	j1Slider(const SDL_Rect sect, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int viewport_distance, int id);
 	~j1Slider();
 
 	//slider -> viewport
@@ -38,6 +38,7 @@ private:
 	p2List<Element*> scroll_elements;
 	int scroll_elements_distance = 0;
 	SDL_Rect view_port;
+	int viewport_distance;
 
 };
 

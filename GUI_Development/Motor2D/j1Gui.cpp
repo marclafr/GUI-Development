@@ -242,10 +242,10 @@ j1Button * j1Gui::CreateButton(SDL_Rect section, SDL_Rect rect, bool tabable)
 	}
 }
 
-j1Slider * j1Gui::CreateSlider(SDL_Rect section, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type)
+j1Slider * j1Gui::CreateSlider(SDL_Rect section, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int viewport_distance)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1Slider* ret = new j1Slider(section, rect, back_rect, back_section, s_type, element_id);
+	j1Slider* ret = new j1Slider(section, rect, back_rect, back_section, s_type, viewport_distance, element_id);
 	if (ret != NULL)
 		elements.add(ret); element_id++;
 

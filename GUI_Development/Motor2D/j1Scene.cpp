@@ -87,13 +87,13 @@ bool j1Scene::Start()
 	Element* input_image = (Element*)App->gui->CreateImage({ 494, 573, 333, 52 }, { 325, 275, 333, 52 }, false);
 	Element* input_txt = (Element*)App->gui->CreateTextBox("", App->font->Print("", { (255),(0),(100),(255) }), 20, false, { 325, 300, 333, 52 },false);
 	Element* input_txt2 = (Element*)App->gui->CreateTextBox("ayy", App->font->Print("ayy", { (255),(0),(100),(255) }), 20, false, { 325, 600, 333, 52 }, false);
-	Element* slider = (Element*)App->gui->CreateSlider({ 1001, 882, 17, 17 }, { 100, 100, 17, 17 }, { 100,100,17,148 }, { 986,874,11,148 }, VERTICAL);
-	Element* image_slider = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 100, 328, 103 }, false);
-	Element* image_slider2 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 203, 328, 103 }, false);
-	Element* image_slider3 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 306, 328, 103 }, false);
-	Element* image_slider4 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 409, 328, 103 }, false);
-	Element* image_slider5 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 512, 328, 103 }, false);
-	Element* image_slider6 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 117, 615, 328, 103 }, false);
+	Element* slider = (Element*)App->gui->CreateSlider({ 1001, 882, 17, 17 }, { 100, 100, 17, 17 }, { 100,100,17,148 }, { 986,874,11,148 }, VERTICAL, 328);
+	Element* image_slider = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 0, 328, 103 }, false);
+	Element* image_slider2 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 103, 328, 103 }, false);
+	Element* image_slider3 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 206, 328, 103 }, false);
+	Element* image_slider4 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 309, 328, 103 }, false);
+	Element* image_slider5 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 412, 328, 103 }, false);
+	Element* image_slider6 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 515, 328, 103 }, false);
 		
 	screen->parent = nullptr;
 	screen->priority = 0;

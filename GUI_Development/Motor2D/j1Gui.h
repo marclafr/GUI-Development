@@ -121,7 +121,7 @@ public:
 	j1Image* CreateImage(SDL_Rect section, SDL_Rect rect, bool tabable);
 	j1AnimatedImage* CreateAnimImage(SDL_Rect section, SDL_Rect rect);
 	j1Button* CreateButton(SDL_Rect section, SDL_Rect rect, bool tabable);
-	j1Slider* CreateSlider(SDL_Rect section, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type);
+	j1Slider* CreateSlider(SDL_Rect section, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int viewport_distance);
 
 	bool DeleteElements();
 
