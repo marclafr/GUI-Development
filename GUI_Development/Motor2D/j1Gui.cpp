@@ -282,7 +282,19 @@ void Element::DragElement()
 	position.x += mouse_motion.x;
 	position.y += mouse_motion.y;
 	for (p2List_item<Element*>* childs_item = childs.start; childs_item; childs_item = childs_item->next)
+	{
 		childs_item->data->DragElement();
+		if (childs_item->data->e_type == slider)
+		{
+			j1Slider* slider = (j1Slider*)childs_item->data;
+			slider->Max_slider.x += mouse_motion.x;
+			slider->Max_slider.y += mouse_motion.y;
+			slider->Min_slider.x += mouse_motion.x;
+			slider->Min_slider.y += mouse_motion.y;
+			slider->back_rect.x += mouse_motion.x;
+			slider->back_rect.y += mouse_motion.y;
+		}
+	}
 }
 
 void Element::DragElementAxisX(float movement)

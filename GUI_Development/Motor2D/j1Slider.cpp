@@ -4,7 +4,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 
-j1Slider::j1Slider(const SDL_Rect sect, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int viewport_distance, int id) : section(sect), slider_type(s_type), back_rect(back_rect), back_section(back_section), Min_slider{ rect.x, rect.y }, viewport_distance(viewport_distance), Element(elem_type::button, rect, 0, id)
+j1Slider::j1Slider(const SDL_Rect sect, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int viewport_distance, int id) : section(sect), slider_type(s_type), back_rect(back_rect), back_section(back_section), Min_slider{ rect.x, rect.y }, viewport_distance(viewport_distance), Element(elem_type::slider, rect, 0, id)
 {
 	if (s_type == VERTICAL)
 		Max_slider = { rect.x, rect.y + back_rect.h };
@@ -19,12 +19,8 @@ j1Slider::~j1Slider()
 
 bool j1Slider::Update(float dt, Element* item)
 {
-	p2List_item<Element*>* childs_item;
-	for (childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
-		childs_item->data->Update(dt, childs_item->data);
-	
-
 	j1Slider* slider = (j1Slider*)item;
+
 	if (item->l_click == true && slider->slider_type == VERTICAL)
 	{
 		DragVerticalSlider();
@@ -44,11 +40,18 @@ bool j1Slider::Update(float dt, Element* item)
 	
 	}
 
+	p2List_item<Element*>* childs_item;
+	for (childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
+		childs_item->data->Update(dt, childs_item->data);
+
 	return true;
 }
 
 bool j1Slider::AddScrollElement(Element * item)
 {
+	if (this->can_drag == true)
+		item->can_drag = true;
+
 	scroll_elements.add(item);
 	if (this->slider_type == VERTICAL)
 		scroll_elements_distance += item->position.h;

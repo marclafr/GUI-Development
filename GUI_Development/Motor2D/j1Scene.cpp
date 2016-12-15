@@ -95,18 +95,17 @@ bool j1Scene::Start()
 	Element* image_slider5 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 412, 328, 103 }, false);
 	Element* image_slider6 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 515, 328, 103 }, false);
 		
-	screen->parent = nullptr;
-	screen->priority = 0;
+
 	screen->AddChild(window);
 	//screen->AddChild(txt);
 	screen->AddChild(img);
-	window->AddChild(button);
-	window->AddChild(wind_title);
-	button->AddChild(butt_title);
-	window->AddChild(input_txt);
-	window->AddChild(input_image);
-	window->AddChild(input_txt2);
-	screen->AddChild(slider);
+	//window->AddChild(button);
+	//window->AddChild(wind_title);
+	//button->AddChild(butt_title);
+	//window->AddChild(input_txt);
+	//window->AddChild(input_image);
+	//window->AddChild(input_txt2);
+	window->AddChild(slider);
 
 	j1Slider* slider1 = (j1Slider*)slider;
 	slider1->AddScrollElement(image_slider);
