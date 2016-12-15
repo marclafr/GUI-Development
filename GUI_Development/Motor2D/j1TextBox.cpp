@@ -7,6 +7,7 @@
 j1TextBox::j1TextBox(p2SString txt, SDL_Texture& tex, int size, bool is_password, SDL_Rect& rect, uint tab_order, int id) : text(txt, size), text_texture(&tex), is_password(is_password), Element(elem_type::text_box, rect, tab_order, id)
 {
 	text.SetFont("fonts/open_sans/OpenSans-Regular.ttf", size);
+	text_texture = App->font->Print(text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text.font);
 	if (txt != NULL)
 		write_pos = txt.Length();
 }
@@ -40,9 +41,8 @@ bool j1TextBox::Draw(float dt, Element* item)
 	}
 	
 	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
-	{
 		childs_item->data->Draw(dt, childs_item->data);
-	}
+	
 
 	return true;
 }

@@ -296,7 +296,12 @@ void Element::DragElementAxisY(float movement)
 {
 	iPoint mouse_motion;
 	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
-	position.y -= mouse_motion.y/movement;
+	double desp = mouse_motion.y / movement;
+	if (desp<0)
+		position.y -= ceil(desp);
+
+	else if (desp>0)
+		position.y -= floor(desp);
 }
 
 bool UI_String::SetFont(const char * path, int size)
