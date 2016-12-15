@@ -7,7 +7,7 @@
 class j1TextBox :public Element
 {
 public:
-	j1TextBox(p2SString text, SDL_Texture& tex, int size, bool is_password, SDL_Rect& rect, int id);
+	j1TextBox(p2SString text, SDL_Texture& tex, int size, bool is_password, SDL_Rect& rect, uint tab_order, int id);
 	~j1TextBox();
 
 	bool is_password;

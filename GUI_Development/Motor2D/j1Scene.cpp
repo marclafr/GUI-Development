@@ -13,6 +13,7 @@
 #include "j1TextBox.h"
 #include "j1Fonts.h"
 #include "j1Slider.h"
+#include "j1Image.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -47,9 +48,36 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
-	//SCREEN
-	Element* screen = (Element*)App->gui->CreateImage(SDL_Rect{ 0,0,0,0 }, SDL_Rect{ 0,0, 640,480 });
-	
+	///SCREEN
+	Element* screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 768, 579 }, false);
+	screen->parent = nullptr;
+	screen->priority = 0;
+
+	//EXERCISE 1
+	Element* background = (Element*)App->gui->CreateImage({ 970, 1844, 768, 579 }, { 0, 0, 768, 579 }, false);
+	screen->AddChild(background);
+	//--
+
+	//EXERCISE 2
+	blue_sel_box = App->gui->CreateImage({ 1485, 110, 72, 109 }, { 240, 80, 288, 191 }, true);
+	screen->AddChild(blue_sel_box);
+	blue_sel_box->is_interactive = true;
+	//--
+
+	//EXERCISE 3
+	player1_char = App->gui->CreateImage({ 925, 605, 168, 279 }, { 24, 61, 168, 279 }, false);
+	blue_sel_box->AddChild(player1_char);
+	//--
+
+	//EXERCISE 4
+	red_sel_box = App->gui->CreateImage({ 1560, 110, 72, 109 }, { 312, 80, 288, 191 }, true);
+	screen->AddChild(red_sel_box);
+	red_sel_box->is_interactive = true;
+	player2_char = App->gui->CreateImage({ 1093, 605, 168, 279 }, { 543, 61, 168, 279 }, false);
+	red_sel_box->AddChild(player2_char);
+	//--
+
+	/*
 	Element* img = (Element*)App->gui->CreateImage(SDL_Rect{ 485, 829, 328, 103 }, SDL_Rect { 800, 100, 328, 103 });
 	//Element* txt = (Element*)App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 });
 	Element* window = (Element*)App->gui->CreateImage(SDL_Rect{ 31,542,424,454 }, SDL_Rect{ 300,100,424,454 });
@@ -89,6 +117,7 @@ bool j1Scene::Start()
 	butt_title->can_drag = true;
 	slider->can_click = true;
 	slider->can_drag = true;
+	*/
 
 	return true;
 }
@@ -126,56 +155,60 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	// Gui ---
-
-	// -------
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		App->LoadGame("save_game.xml");
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
-
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y += floor(200.0f * dt);
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->render->camera.y -= floor(200.0f * dt);
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x += floor(200.0f * dt);
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x -= floor(200.0f * dt);
-
-	App->map->Draw();
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.count(),
-		map_coordinates.x, map_coordinates.y);
-
-	//App->win->SetTitle(title.GetString());
-
-	// Debug pathfinding ------------------------------
-	//int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-
-	App->render->Blit(debug_tex, p.x, p.y);
-
-	const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-
-	for (uint i = 0; i < path->Count(); ++i)
+	//EXERCISE 2 && 3
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		App->render->Blit(debug_tex, pos.x, pos.y);
+		if (blue_sel_box->tab_focus == true && blue_sel_box->position.x < 456)
+		{
+			blue_sel_box->position.x += 72;
+			player1_char->section.x += 168;
+		}
+		else if (red_sel_box->tab_focus == true && red_sel_box->position.x < 456)
+		{
+			red_sel_box->position.x += 72;
+			player2_char->section.x += 168;
+		}
 	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		if (blue_sel_box->tab_focus == true && blue_sel_box->position.x > 240)
+		{
+			blue_sel_box->position.x -= 72;
+			player1_char->section.x -= 168;
+		}
+		else if (red_sel_box->tab_focus == true && red_sel_box->position.x > 240)
+		{
+			red_sel_box->position.x -= 72;
+			player2_char->section.x -= 168;
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_UP))
+	{
+		if (blue_sel_box->tab_focus == true && blue_sel_box->position.y > 80)
+		{
+			blue_sel_box->position.y -= 95;
+			player1_char->section.y -= 279;
+		}
+		else if (red_sel_box->tab_focus == true && red_sel_box->position.y > 80)
+		{
+			red_sel_box->position.y -= 95;
+			player2_char->section.y -= 279;
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		if (blue_sel_box->tab_focus == true && blue_sel_box->position.y < 175)
+		{
+			blue_sel_box->position.y += 95;
+			player1_char->section.y += 279;
+		}
+		else if (red_sel_box->tab_focus == true && red_sel_box->position.y < 175)
+		{
+			red_sel_box->position.y += 95;
+			player2_char->section.y += 279;
+		}
+	}
+
 	return true;
 }
 

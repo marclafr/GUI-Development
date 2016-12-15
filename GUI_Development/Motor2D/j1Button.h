@@ -6,7 +6,7 @@
 class j1Button :public Element
 {
 public:
-	j1Button(const SDL_Rect section, SDL_Rect rect, int id) : section(section), Element(elem_type::button, rect, id) {}
+	j1Button(const SDL_Rect section, SDL_Rect rect, uint tab_order, int id) : section(section), Element(elem_type::button, rect, tab_order, id) {}
 	~j1Button() {}
 
 	bool is_pressed;

@@ -38,7 +38,10 @@ enum elem_type
 #define MAX_PRIORITY 3
 struct Element
 {
-	Element(elem_type type, SDL_Rect& rectangle, int ident) : e_type(type), position(rectangle), id(ident), is_visible(true) {}
+	Element(elem_type type, SDL_Rect& rectangle, uint tab_ord, int ident) : e_type(type), position(rectangle), tab_order(tab_ord), id(ident), is_visible(true)
+	{
+	}
+
 	~Element() {}
 
 	SDL_Rect position;
@@ -53,6 +56,9 @@ struct Element
 	bool can_drag;
 	bool can_click;
 	int priority;
+	bool is_interactive;
+	uint tab_order;
+	bool tab_focus = false;
 
 	void SetPosition(SDL_Rect& rect); //set position and size
 	void AddChild(Element* child);
@@ -60,8 +66,8 @@ struct Element
 	void DragElementAxisX();
 	void DragElementAxisY();
 
-	virtual bool Update(float dt, Element* item)	 { return true; }
-	virtual bool Draw(float dt, Element* item)		 { return true; }
+	virtual bool Update(float dt, Element* item) { return true; }
+	virtual bool Draw(float dt, Element* item) { return true; }
 
 private:
 	SDL_Rect section;
@@ -108,18 +114,19 @@ public:
 	// Gui creation functions
 	p2List<Element*> elements;
 	int element_id = 0;
+	uint tab_order_max = 0;
 	bool some_is_clicked = false;
 	j1Label* CreateLabel(const p2SString& text, int size, SDL_Rect& rect);
-	j1TextBox* CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect& rect);
-	j1Image* CreateImage(SDL_Rect& section, SDL_Rect& rect);
+	j1TextBox* CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect& rect, bool tabable);
+	j1Image* CreateImage(SDL_Rect section, SDL_Rect rect, bool tabable);
 	j1AnimatedImage* CreateAnimImage(SDL_Rect& section, SDL_Rect& rect);
-	j1Button* CreateButton(SDL_Rect& section, SDL_Rect& rect);
+	j1Button* CreateButton(SDL_Rect& section, SDL_Rect& rect, bool tabable);
 	j1Slider* CreateSlider(SDL_Rect& section, SDL_Rect& rect, SDL_Rect & back_rect, SDL_Rect & back_section, SliderType s_type);
 
 	bool DeleteElements();
 
 	SDL_Texture* GetAtlas() const;
-		
+
 private:
 
 	SDL_Texture* atlas;

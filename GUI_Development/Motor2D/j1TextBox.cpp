@@ -4,7 +4,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 
-j1TextBox::j1TextBox(p2SString txt, SDL_Texture& tex, int size, bool is_password, SDL_Rect& rect, int id) : text(txt, size), text_texture(&tex), is_password(is_password), Element(elem_type::text_box, rect, id)
+j1TextBox::j1TextBox(p2SString txt, SDL_Texture& tex, int size, bool is_password, SDL_Rect& rect, uint tab_order, int id) : text(txt, size), text_texture(&tex), is_password(is_password), Element(elem_type::text_box, rect, tab_order, id)
 {
 	text.SetFont("fonts/open_sans/OpenSans-Regular.ttf", size);
 	if (txt != NULL)

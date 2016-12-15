@@ -4,7 +4,7 @@
 #include "j1Fonts.h"
 #include "j1Input.h"
 
-j1Slider::j1Slider(const SDL_Rect sect, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int id) : section(sect), slider_type(s_type), back_rect(back_rect), back_section(back_section), Min_slider{ rect.x, rect.y }, Element(elem_type::button, rect, id)
+j1Slider::j1Slider(const SDL_Rect sect, SDL_Rect rect, SDL_Rect back_rect, SDL_Rect back_section, SliderType s_type, int id) : section(sect), slider_type(s_type), back_rect(back_rect), back_section(back_section), Min_slider{ rect.x, rect.y }, Element(elem_type::button, rect, 0, id)
 {
 	if (s_type == VERTICAL)
 		Max_slider = { rect.x, rect.y + back_rect.h };

@@ -53,9 +53,9 @@ bool j1Gui::Update(float dt)
 
 	iPoint mouse;
 	App->input->GetMousePosition(mouse.x, mouse.y);
-		
+
 	Element* screen = elements.start->data;
-	
+
 	for (int i = MAX_PRIORITY; i > 0; i--)
 	{
 		for (p2List_item<Element*>* all = elements.start; all; all = all->next)
@@ -104,13 +104,35 @@ bool j1Gui::Update(float dt)
 							}
 						}
 						j1TextBox* text = (j1TextBox*)all->data;
-						text->text_clicked = true;						
+						text->text_clicked = true;
 					}
 				}
 			}
 		}
 	}
-	
+
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
+	{
+		int tab_num;
+		for (p2List_item<Element*>* all = elements.start; all; all = all->next)
+		{
+			if (all->data->tab_focus == true)
+			{
+				tab_num = all->data->tab_order;
+				all->data->tab_focus = false;
+			}
+		}
+
+		if (tab_num >= tab_order_max)
+			tab_num = 0;
+
+		for (p2List_item<Element*>* all = elements.start; all; all = all->next)
+		{
+			if (all->data->tab_order == tab_num + 1)
+				all->data->tab_focus = true;
+		}
+	}
+
 	p2List_item<Element*>* item = screen->childs.start;
 	for (int i = 0; screen->childs.count() > i; i++, item = item->next)
 	{
@@ -149,57 +171,82 @@ j1Label * j1Gui::CreateLabel(const p2SString& text, int size, SDL_Rect& rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	j1Label* ret = new j1Label(text, size, rect, element_id);
-	if (ret != nullptr)
+	if (ret != NULL)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1TextBox * j1Gui::CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect& rect)
+j1TextBox * j1Gui::CreateTextBox(const p2SString& text, SDL_Texture* tex, int size, bool is_pw, SDL_Rect& rect, bool tabable)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1TextBox* ret = new j1TextBox(text, *tex, size,  false, rect, element_id);
-	if (ret != nullptr)
+	j1TextBox* ret = nullptr;
+	if (tabable == true)
+	{
+		tab_order_max++;
+		j1TextBox* ret = new j1TextBox(text, *tex, size, false, rect, tab_order_max, element_id);
 		elements.add(ret); element_id++;
-
-	return ret;
+		return ret;
+	}
+	else
+	{
+		j1TextBox* ret = new j1TextBox(text, *tex, size, false, rect, 0, element_id);
+		elements.add(ret); element_id++;
+		return ret;
+	}
 }
 
-j1Image * j1Gui::CreateImage(SDL_Rect& section, SDL_Rect& rect)
+j1Image * j1Gui::CreateImage(SDL_Rect section, SDL_Rect rect, bool tabable)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1Image* ret = new j1Image(image, section, rect, element_id);
-	if (ret != nullptr)
+	if (tabable == true)
+	{
+		tab_order_max++;
+		j1Image* ret = new j1Image(image, section, rect, tab_order_max, element_id);
 		elements.add(ret); element_id++;
-
-	return ret;
+		return ret;
+	}
+	else
+	{
+		j1Image* ret = new j1Image(image, section, rect, 0, element_id);
+		elements.add(ret); element_id++;
+		return ret;
+	}
 }
 
 j1AnimatedImage * j1Gui::CreateAnimImage(SDL_Rect& section, SDL_Rect& rect)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	j1AnimatedImage* ret = new j1AnimatedImage(section, rect, element_id);
-	if (ret != nullptr)
+	if (ret != NULL)
 		elements.add(ret); element_id++;
 
 	return ret;
 }
 
-j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect)
+j1Button * j1Gui::CreateButton(SDL_Rect& section, SDL_Rect& rect, bool tabable)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
-	j1Button* ret = new j1Button(section, rect, element_id);
-	if (ret != nullptr)
+	if (tabable == true)
+	{
+		tab_order_max++;
+		j1Button* ret = new j1Button(section, rect, tab_order_max, element_id);
 		elements.add(ret); element_id++;
-
-	return ret;
+		return ret;
+	}
+	else
+	{
+		j1Button* ret = new j1Button(section, rect, 0, element_id);
+		elements.add(ret); element_id++;
+		return ret;
+	}
 }
 
 j1Slider * j1Gui::CreateSlider(SDL_Rect & section, SDL_Rect & rect, SDL_Rect & back_rect, SDL_Rect & back_section, SliderType s_type)
 {
 	static_assert(elem_type::unknown == UNKNOWN_NUM, "elements type needs update");
 	j1Slider* ret = new j1Slider(section, rect, back_rect, back_section, s_type, element_id);
-	if (ret != nullptr)
+	if (ret != NULL)
 		elements.add(ret); element_id++;
 
 	return ret;
@@ -235,7 +282,7 @@ void Element::DragElement()
 	position.x += mouse_motion.x;
 	position.y += mouse_motion.y;
 	for (p2List_item<Element*>* childs_item = childs.start; childs_item; childs_item = childs_item->next)
-		childs_item->data->DragElement();	
+		childs_item->data->DragElement();
 }
 
 void Element::DragElementAxisX()

@@ -3,7 +3,7 @@
 #include "j1App.h"
 #include "j1Fonts.h"
 
-j1Label::j1Label(p2SString txt, int size, SDL_Rect rect, int id) : text(txt, size), Element(elem_type::label, rect, id)
+j1Label::j1Label(p2SString txt, int size, SDL_Rect rect, int id) : text(txt, size), Element(elem_type::label, rect, 0, id)
 {
 	text.SetFont("fonts/open_sans/OpenSans-Regular.ttf", 20);
 	text_texture = App->font->Print(text.text.GetString(), SDL_Color { (255), (0), (255), (255) });

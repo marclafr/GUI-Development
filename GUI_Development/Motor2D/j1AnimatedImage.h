@@ -7,7 +7,7 @@
 class j1AnimatedImage :public j1Image
 {
 public:
-	j1AnimatedImage(const SDL_Rect& section, SDL_Rect& rect, int id) : j1Image(elem_type::anim_image, section, rect, id) {}
+	j1AnimatedImage(const SDL_Rect& section, SDL_Rect& rect, int id) : j1Image(elem_type::anim_image, section, rect, 0, id) {}
 	~j1AnimatedImage() {}
 
 	//Animation anim;
