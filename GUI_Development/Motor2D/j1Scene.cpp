@@ -6,8 +6,6 @@
 #include "j1Audio.h"
 #include "j1Render.h"
 #include "j1Window.h"
-#include "j1Map.h"
-#include "j1PathFinding.h"
 #include "j1Gui.h"
 #include "j1Scene.h"
 #include "j1TextBox.h"
@@ -36,7 +34,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if(App->map->Load("iso_walk.tmx") == true)
+	/*if(App->map->Load("iso_walk.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -47,6 +45,7 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png");
+*/
 
 	///SCREEN
 	Element* screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 768, 579 }, false);
@@ -125,7 +124,7 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-
+	/*
 	// debug pathfing ------------------
 	static iPoint origin;
 	static bool origin_selected = false;
@@ -147,7 +146,7 @@ bool j1Scene::PreUpdate()
 			origin = p;
 			origin_selected = true;
 		}
-	}
+	}*/
 
 	return true;
 }
