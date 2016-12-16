@@ -113,7 +113,7 @@ bool j1Gui::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
 	{
-		int tab_num;
+		int tab_num = 0;
 		for (p2List_item<Element*>* all = elements.start; all; all = all->next)
 		{
 			if (all->data->tab_focus == true)
