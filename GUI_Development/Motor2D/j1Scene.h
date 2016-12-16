@@ -40,10 +40,12 @@ private:
 	GuiImage* banner;
 	GuiText* text;
 
+	/*
 	j1Image* player1_char;
 	j1Image* player2_char;
 	j1Image* blue_sel_box;
 	j1Image* red_sel_box;
+	*/
 };
 
 #endif // __j1SCENE_H__

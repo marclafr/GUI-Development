@@ -1,11 +1,7 @@
-#include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Input.h"
-#include "j1Textures.h"
-#include "j1Audio.h"
 #include "j1Render.h"
-#include "j1Window.h"
 #include "j1Gui.h"
 #include "j1Scene.h"
 #include "j1TextBox.h"
@@ -34,23 +30,11 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	/*if(App->map->Load("iso_walk.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		if(App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
-	}
-
-	debug_tex = App->tex->Load("maps/path2.png");
-*/
-
 	///SCREEN
 	Element* screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 768, 579 }, false);
-	screen->parent = nullptr;
-	screen->priority = 0;
+	//screen->parent = nullptr;
+	//screen->priority = 0;
+
 	/*
 	//EXERCISE 1
 	Element* background = (Element*)App->gui->CreateImage({ 970, 1844, 768, 579 }, { 0, 0, 768, 579 }, false);
@@ -79,7 +63,6 @@ bool j1Scene::Start()
 	*/
 	
 	Element* img = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 },  { 800, 100, 328, 103 },false);
-	//Element* txt = (Element*)App->gui->CreateTextBox("Hello world", 12, false, SDL_Rect { 750, 50, 100, 25 }, false);
 	Element* window = (Element*)App->gui->CreateImage({ 31,542,424,454 }, { 300,100,424,454 },false);
 	Element* button = (Element*)App->gui->CreateButton({ 647, 173, 225, 61 }, { 400, 350, 225, 61 },false);
 	Element* wind_title = (Element*)App->gui->CreateLabel("Window Title", 40, { 310, 110, 50, 25 });
@@ -94,17 +77,15 @@ bool j1Scene::Start()
 	Element* image_slider4 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 309, 328, 103 }, false);
 	Element* image_slider5 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 412, 328, 103 }, false);
 	Element* image_slider6 = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 }, { 17, 515, 328, 103 }, false);
-		
-
+	
 	screen->AddChild(window);
-	//screen->AddChild(txt);
 	screen->AddChild(img);
-	//window->AddChild(button);
-	//window->AddChild(wind_title);
-	//button->AddChild(butt_title);
-	//window->AddChild(input_txt);
-	//window->AddChild(input_image);
-	//window->AddChild(input_txt2);
+	window->AddChild(button);
+	window->AddChild(wind_title);
+	button->AddChild(butt_title);
+	window->AddChild(input_txt);
+	window->AddChild(input_image);
+	window->AddChild(input_txt2);
 	window->AddChild(slider);
 
 	j1Slider* slider1 = (j1Slider*)slider;
@@ -117,7 +98,6 @@ bool j1Scene::Start()
 
 	input_txt2->can_click = true;
 	input_txt->can_click = true;
-	//txt->can_click = true;
 	window->can_drag = true;
 	window->can_click = true;
 	button->can_drag = true;
@@ -127,37 +107,12 @@ bool j1Scene::Start()
 	slider->can_click = true;
 	slider->can_drag = true;
 	
-
 	return true;
 }
 
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-	/*
-	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-
-	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if(origin_selected == true)
-		{
-			App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
-		}
-	}*/
-
 	return true;
 }
 
