@@ -76,6 +76,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="j1Button.cpp" />
+    <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1Gui.cpp" />
@@ -101,6 +102,7 @@
   <ItemGroup>
     <ClInclude Include="j1AnimatedImage.h" />
     <ClInclude Include="j1Button.h" />
+    <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1Gui.h" />
