@@ -134,6 +134,9 @@ bool j1Input::PreUpdate()
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
+
+			case SDL_MOUSEWHEEL:
+				mouse_wheel_y = event.wheel.y / scale;
 		}
 	}
 
@@ -164,4 +167,9 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+void j1Input::GetMouseWheel(int & y)
+{
+	y = mouse_wheel_y;
 }
