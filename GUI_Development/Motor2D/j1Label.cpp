@@ -19,6 +19,21 @@ void j1Label::SetText(const char * txt)
 	text.text = txt;	
 }
 
+bool j1Label::Update(float dt, Element* item)
+{
+	j1Label* temp = (j1Label*)item;
+	iPoint mouse_motion;
+
+	p2List_item<Element*>* childs_item;
+	for (childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
+		childs_item->data->Update(dt, childs_item->data);
+
+	if (temp->l_click == true && item->can_drag == true)
+		item->DragElement();
+
+	return true;
+}
+
 bool j1Label::Draw(float dt, Element* item)
 {
 	j1Label* temp = (j1Label*)item;

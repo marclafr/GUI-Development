@@ -37,6 +37,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 bool j1Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.GetString());
+	screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 1024, 576 }, false);
 
 	return true;
 }
@@ -156,6 +157,34 @@ bool j1Gui::CleanUp()
 
 	DeleteElements();
 
+	return true;
+}
+
+bool j1Gui::Load(pugi::xml_node& node)
+{
+	for (pugi::xml_node labels = node.child("label"); labels; labels = labels.next_sibling("label"))
+	{
+		Element* label = CreateLabel(labels.attribute("text").as_string(), 50, { labels.attribute("position_x").as_int(), labels.attribute("position_y").as_int(), 200, 75 });
+		if (labels.attribute("draggable").as_bool() == true)
+		{
+			label->can_click = true;
+			label->can_drag = true;
+		}
+		screen->AddChild(label);
+	}
+	return true;
+}
+
+bool j1Gui::Save(pugi::xml_node& node) const
+{
+	node.append_child("label");
+	for (p2List_item<Element*>* item = elements.start; item; item = item->next)
+	{
+		if (item->data->can_drag == true)
+		{
+
+		}
+	}
 	return true;
 }
 

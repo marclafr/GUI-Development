@@ -111,6 +111,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Load/Save
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
+
 	// Gui creation functions
 	p2List<Element*> elements;
 	int element_id = 0;
@@ -126,6 +131,7 @@ public:
 	bool DeleteElements();
 
 	SDL_Texture* GetAtlas() const;
+	Element* screen;
 
 private:
 

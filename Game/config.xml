@@ -16,6 +16,7 @@
 
   <gui>
     <atlas file="gui/sf2.png"/>
+    <label text="This is a test" position_x="50" position_y="100" draggable="true"/>
   </gui>
     
   <window>

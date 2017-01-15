@@ -17,6 +17,7 @@ public:
 
 public:
 	bool Draw(float dt, Element* item);
+	bool Update(float dt, Element* item);
 };
 
 #endif // !__LABEL__

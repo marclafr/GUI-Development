@@ -7,6 +7,7 @@ struct SDL_Texture;
 class GuiImage;
 class GuiText;
 class j1Image; 
+struct Element;
 
 class j1Scene : public j1Module
 {
@@ -34,6 +35,8 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+	Element* screen;
 
 private:
 	SDL_Texture* debug_tex;

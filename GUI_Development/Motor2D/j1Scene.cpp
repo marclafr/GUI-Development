@@ -31,8 +31,9 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	///SCREEN
-	Element* screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 1024, 576 }, false);
+	screen = App->gui->screen;
 
+	/*//LOL UI
 	Element* background = (Element*)App->gui->CreateImage({ 0, 1600, 1024, 576 }, { 0,0, 1024, 576 }, false);
 	screen->AddChild(background);
 	Element* window = (Element*)App->gui->CreateImage({ 0, 512, 483, 512 }, { 285,25,483,512 }, false);
@@ -54,7 +55,7 @@ bool j1Scene::Start()
 	heroes1->CreateViewport({ 415, heroes_y_pos, 205, 287 });
 	heroes2 = (j1Image*)heroes_2;
 	heroes2->CreateViewport({ 415, heroes_y_pos, 205, 287 });
-
+	*/
 
 
 	/*
@@ -143,6 +144,15 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		App->LoadGame("save_file.xml");
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		App->SaveGame("save_file.xml");
+
+	/*
+	//LOL UI
 	if (heroes1->position.y != heroes_y_pos)
 		heroes1->position.y = heroes_y_pos;
 
@@ -159,6 +169,8 @@ bool j1Scene::Update(float dt)
 
 	if (heroes2->position.y != heroes_y_pos)
 		heroes2->position.y = heroes_y_pos;
+	*/
+
 
 	//EXERCISE 2 && 3
 	/*if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
