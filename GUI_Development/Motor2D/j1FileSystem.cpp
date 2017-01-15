@@ -169,3 +169,54 @@ unsigned int j1FileSystem::Save(const char* file, const char* buffer, unsigned i
 
 	return ret;
 }
+
+bool j1FileSystem::CreateNewDirectory(const char* name)
+{
+	bool ret = false;
+
+	if (PHYSFS_mkdir(name) == 0)
+		LOG("Error while trying to create a new directory (%s): %s\n", name, PHYSFS_getLastError());
+	else
+		ret = true;
+
+	return ret;
+}
+
+//	PHYSFS_exists(const char* name)
+//	PHYSFS_isDirectory(const char* name)
+
+/*
+// Ask SDL for a write dir
+char* write_path = SDL_GetPrefPath(App->GetOrganization(), App->GetTitle());
+
+if(PHYSFS_setWriteDir(write_path) == 0)
+LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
+else
+{
+// We add the writing directory as a reading directory too with speacial mount point
+LOG("Writing directory is %s\n", write_path);
+AddPath(write_path, GetSaveDirectory());
+}
+
+SDL_free(write_path);
+*/
+
+/*
+uint j1FileSystem::WriteBuffer(const char path, char data_buffer) const {
+PHYSFS_File* file = PHYSFS_openWrite(path);
+if (file != NULL)
+LOG("WriteBuffer method Alert: file already have a buffer.");
+
+if (data_buffer != NULL) {
+uint buffer_size = strlen(data_buffer);
+uint buffer_write_length = PHYSFS_write(file, data_buffer, buffer_size, 1);
+if (PHYSFS_close(file) == 0)
+LOG("File System error while closing file %s: %s\n", file, PHYSFS_getLastError());
+return buffer_write_length;
+}
+else {
+LOG("WriteBuffer error: NULL Buffer.");
+return NULL;
+}
+}
+*/
