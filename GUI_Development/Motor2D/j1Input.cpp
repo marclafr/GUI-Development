@@ -85,6 +85,7 @@ bool j1Input::PreUpdate()
 	//TODO 	SDL_StopTextInput();
 	while(SDL_PollEvent(&event) != 0)
 	{
+		int scale = App->win->GetScale();
 		switch(event.type)
 		{
 			case SDL_QUIT:
@@ -127,7 +128,6 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_MOUSEMOTION:
-				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
@@ -169,7 +169,7 @@ void j1Input::GetMouseMotion(int& x, int& y)
 	y = mouse_motion_y;
 }
 
-void j1Input::GetMouseWheel(int & y)
+int j1Input::GetMouseWheel()
 {
-	y = mouse_wheel_y;
+	return mouse_wheel_y;
 }
