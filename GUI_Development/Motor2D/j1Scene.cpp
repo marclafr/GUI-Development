@@ -19,10 +19,24 @@ j1Scene::~j1Scene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake()
+bool j1Scene::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading Scene");
 	bool ret = true;
+
+	///SCREEN
+	screen = App->gui->screen;
+
+	for (pugi::xml_node labels = conf.child("label"); labels; labels = labels.next_sibling("label"))
+	{
+		Element* label = (Element*)App->gui->CreateLabel(labels.attribute("text").as_string(), 50, { labels.attribute("position_x").as_int(), labels.attribute("position_y").as_int(), 200, 75 });
+		if (labels.attribute("draggable").as_bool() == true)
+		{
+			label->can_click = true;
+			label->can_drag = true;
+		}
+		screen->AddChild(label);
+	}
 
 	return ret;
 }
@@ -30,8 +44,6 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	///SCREEN
-	screen = App->gui->screen;
 
 	/*//LOL UI
 	Element* background = (Element*)App->gui->CreateImage({ 0, 1600, 1024, 576 }, { 0,0, 1024, 576 }, false);
@@ -245,5 +257,34 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	return true;
+}
+
+
+bool j1Scene::Load(pugi::xml_node& node)
+{
+	for (pugi::xml_node labels = node.child("label"); labels; labels = labels.next_sibling("label"))
+	{
+		Element* label = (Element*)App->gui->CreateLabel(labels.attribute("text").as_string(), 50, { labels.attribute("position_x").as_int(), labels.attribute("position_y").as_int(), 200, 75 });
+		if (labels.attribute("draggable").as_bool() == true)
+		{
+			label->can_click = true;
+			label->can_drag = true;
+		}
+		screen->AddChild(label);
+	}
+	return true;
+}
+
+bool j1Scene::Save(pugi::xml_node& node) const
+{
+	node.append_child("label");
+	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
+	{
+		if (item->data->can_drag == true)
+		{
+
+		}
+	}
 	return true;
 }

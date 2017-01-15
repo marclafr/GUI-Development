@@ -14,6 +14,11 @@
     <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
   </font>
 
+  <scene>
+    <label text="This is a test" position_x="50" position_y="100" draggable="true"/>
+    <label text="This is ANOTHER test" position_x="50" position_y="300" draggable="true"/>
+  </scene>
+
   <gui>
     <atlas file="gui/atlas_lol.png"/>
   </gui>
