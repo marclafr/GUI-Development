@@ -7,12 +7,42 @@
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
+#define DIAGONALCOST 1,141
+struct PathNode;
+struct PathList;
 
 // --------------------------------------------------
 // Recommended reading:
 // Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
+struct PathNode
+{
+	// Convenient constructors
+	PathNode();
+	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
+	PathNode(const PathNode& node);
+
+	// Fills a list (PathList) of all valid adjacent pathnodes
+	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+	// Calculates this tile score
+	int Score() const;
+	// Calculate the F for a specific destination tile
+	int CalculateF(const iPoint& destination);
+
+	// -----------
+	int g;
+	int h;
+	iPoint pos;
+	const PathNode* parent; // needed to reconstruct the path in the end
+};
+
+class Teleport {
+public:
+	PathNode origin, dest;
+
+};
+
 
 class j1PathFinding : public j1Module
 {
@@ -43,7 +73,11 @@ public:
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
+	p2List_item<PathNode>* Newnodeteleport(p2List_item<PathNode>* activenode, PathList &listclose);
+	bool WorthTeleport(p2List_item<PathNode> *Adjacent, iPoint dest);
+	p2List<Teleport> Myteleport;
 
+	void CreateTeleports();
 private:
 
 	// size of the map
@@ -53,34 +87,15 @@ private:
 	uchar* map;
 	// we store the created path here
 	p2DynArray<iPoint> last_path;
+
 };
 
 // forward declaration
-struct PathList;
+
 
 // ---------------------------------------------------------------------
 // Pathnode: Helper struct to represent a node in the path creation
 // ---------------------------------------------------------------------
-struct PathNode
-{
-	// Convenient constructors
-	PathNode();
-	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
-	PathNode(const PathNode& node);
-
-	// Fills a list (PathList) of all valid adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill) const;
-	// Calculates this tile score
-	int Score() const;
-	// Calculate the F for a specific destination tile
-	int CalculateF(const iPoint& destination);
-
-	// -----------
-	int g;
-	int h;
-	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
-};
 
 // ---------------------------------------------------------------------
 // Helper struct to include a list of path nodes

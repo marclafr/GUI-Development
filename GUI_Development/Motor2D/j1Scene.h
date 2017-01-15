@@ -42,6 +42,8 @@ public:
 
 	Element* screen;
 
+	SDL_Texture* movingtile;
+
 private:
 	SDL_Texture* debug_tex;
 	GuiImage* banner;
