@@ -111,10 +111,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Load/Save
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
-
 
 	// Gui creation functions
 	p2List<Element*> elements;

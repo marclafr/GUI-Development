@@ -452,3 +452,16 @@ bool j1App::SavegameNow() const
 	want_to_save = false;
 	return ret;
 }
+
+/*
+TODO: DELETE
+accumulated_update += dt;
+if (accumulated_update > entities_update)
+{
+// EXERCISE 3
+for (uint i = 0; i < entities.Count(); ++i)
+entities[i]->Update(accumulated_update);
+
+accumulated_update -= entities_update;
+}
+*/

@@ -35,7 +35,7 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 		labels_txt.add(labels.attribute("text").as_string());
 		labels_posx.add(labels.attribute("position_x").as_int());
 		labels_posy.add(labels.attribute("position_y").as_int());
-		labels_draggable.add(labels.attribute("draggable").as_int());
+		labels_draggable.add(labels.attribute("draggable").as_bool());
 	}
 	return ret;
 }
@@ -251,9 +251,9 @@ bool j1Scene::Update(float dt)
 		x2 = x - App->render->camera.x;
 		y2 = y - App->render->camera.y;
 	}
-	//--
 
 	App->map->DrawSelection(x1, y1, x2, y2);
+	//--
 
 	// Debug pathfinding ------------------------------
 
@@ -381,18 +381,45 @@ bool j1Scene::Load(pugi::xml_node& node)
 		}
 		screen->AddChild(label);
 	}
+
+	//Load gui (draggable) elements
+	pugi::xml_node labels = node.child("label");
+	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
+	{
+		if (item->data->can_drag == true)
+		{
+			switch (item->data->e_type)
+			{
+			case label:
+				item->data->position.x = labels.attribute("position_x").as_int();
+				item->data->position.y = labels.attribute("position_y").as_int();
+				labels = labels.next_sibling("label");
+				break;
+			}
+		}
+	}
+	//--
+
 	return true;
 }
 
 bool j1Scene::Save(pugi::xml_node& node) const
 {
-	node.append_child("label");
+	//Save gui (draggable) elements
 	for (p2List_item<Element*>* item = App->gui->elements.start; item; item = item->next)
 	{
 		if (item->data->can_drag == true)
 		{
-
+			switch (item->data->e_type)
+			{
+			case label:
+				pugi::xml_node labels = node.append_child("label");
+				labels.append_attribute("position_x").set_value(item->data->position.x);
+				labels.append_attribute("position_y").set_value(item->data->position.y);
+				break;
+			}
 		}
 	}
+	//--
 	return true;
 }
