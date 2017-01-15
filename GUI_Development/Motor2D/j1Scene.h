@@ -49,6 +49,11 @@ private:
 	GuiImage* banner;
 	GuiText* text;
 
+	p2List<p2SString> labels_txt;
+	p2List<int> labels_posx;
+	p2List<int> labels_posy;
+	p2List<bool> labels_draggable;
+
 	j1Image* heroes1;
 	j1Image* heroes2;
 

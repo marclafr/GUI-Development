@@ -30,13 +30,30 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 	LOG("Loading Scene");
 	bool ret = true;
 
+	for (pugi::xml_node labels = conf.child("label"); labels; labels = labels.next_sibling("label"))
+	{
+		labels_txt.add(labels.attribute("text").as_string());
+		labels_posx.add(labels.attribute("position_x").as_int());
+		labels_posy.add(labels.attribute("position_y").as_int());
+		labels_draggable.add(labels.attribute("draggable").as_int());
+	}
+	return ret;
+}
+
+// Called before the first frame
+bool j1Scene::Start()
+{
 	///SCREEN
 	screen = App->gui->screen;
 
-	for (pugi::xml_node labels = conf.child("label"); labels; labels = labels.next_sibling("label"))
+
+	p2List_item<int>*itemx = labels_posx.start;
+	p2List_item<int>*itemy = labels_posy.start;
+	p2List_item<bool>*itembool = labels_draggable.start;
+	for (p2List_item<p2SString>*item = labels_txt.start; item; item = item->next, itemx = itemx->next, itemy = itemy->next, itembool = itembool->next)
 	{
-		Element* label = (Element*)App->gui->CreateLabel(labels.attribute("text").as_string(), 50, { labels.attribute("position_x").as_int(), labels.attribute("position_y").as_int(), 200, 75 });
-		if (labels.attribute("draggable").as_bool() == true)
+		Element* label = (Element*)App->gui->CreateLabel(item->data.GetString(), 50, { itemx->data, itemy->data, 200, 75 });
+		if (itembool->data == true)
 		{
 			label->can_click = true;
 			label->can_drag = true;
@@ -44,12 +61,6 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 		screen->AddChild(label);
 	}
 
-	return ret;
-}
-
-// Called before the first frame
-bool j1Scene::Start()
-{
 	if (App->map->Load("iso_walk.tmx") == true)
 	{
 		int w, h;

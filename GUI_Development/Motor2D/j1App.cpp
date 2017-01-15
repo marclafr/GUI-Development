@@ -45,13 +45,13 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(pathfinding);
-	AddModule(render);
 	
 	AddModule(font);
-	AddModule(gui);
 	AddModule(scene);
 	AddModule(console);
+	AddModule(gui);
 
+	AddModule(render);
 
 	PERF_PEEK(ptimer);
 }
