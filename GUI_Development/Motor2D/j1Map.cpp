@@ -27,12 +27,51 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+//SELECTION
+void j1Map::DrawSelection(int x1, int y1, int x2, int y2) const
+{
+	int tile_id = 25;
+	TileSet* tileset = GetTilesetFromTileId(tile_id);
+	SDL_Rect sect = tileset->GetTileRect(tile_id);
+
+	iPoint p1 = WorldToMap(x1, y1);
+	iPoint p2 = WorldToMap(x2, y2);
+
+	for (int col = abs(p1.x - p2.x); col > 0; col--)
+	{
+		for (int row = abs(p1.y - p2.y); row > 0; row--)
+		{
+			int x;
+			if (p2.x > p1.x)
+				x = p1.x + col;
+			else
+				x = p1.x - col;
+
+			int y;
+			if (p1.y > p2.y)
+				y = p2.y + row;
+			else
+				y = p2.y - row;
+
+			iPoint map = MapToWorld(x, y);
+			App->render->Blit(tileset->texture, map.x, map.y, &sect);
+		}
+	}
+}
+//--
+
 void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;
 
-	// TODO 4: Make sure we draw all the layers and not just the first one
+	//INFINITE LOOP
+	if (App->render->camera.x < 0)
+		App->render->camera.x = data.width*data.tile_width;
+	if (App->render->camera.x > data.width*data.tile_width)
+		App->render->camera.x = 0;
+	//--
+
 	p2List_item<MapLayer*>* item = data.layers.start;
 
 	for (; item != NULL; item = item->next)
@@ -53,8 +92,21 @@ void j1Map::Draw()
 
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
-
+					//MORE MAPS
 					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+					iPoint pos2 = MapToWorld(x + data.width, y);
+					App->render->Blit(tileset->texture, pos2.x, pos2.y, &r);
+					iPoint pos3 = MapToWorld(x - data.width, y);
+					App->render->Blit(tileset->texture, pos3.x, pos3.y, &r);
+					iPoint pos4 = MapToWorld(x, y + data.height);
+					App->render->Blit(tileset->texture, pos4.x, pos4.y, &r);
+					iPoint pos5 = MapToWorld(x, y - data.height);
+					App->render->Blit(tileset->texture, pos5.x, pos5.y, &r);
+					iPoint pos6 = MapToWorld(x + data.width, y - data.height);
+					App->render->Blit(tileset->texture, pos6.x, pos6.y, &r);
+					iPoint pos7 = MapToWorld(x - data.width, y + data.height);
+					App->render->Blit(tileset->texture, pos7.x, pos7.y, &r);
+					//--
 				}
 			}
 		}

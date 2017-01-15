@@ -61,6 +61,12 @@ private:
 	int heroes1_x_pos_min = 415;
 	int heroes1_x_pos_max = 1845;
 	int heroes2_x_pos_min = 1439;
+
+private:
+	int x1 = 0;
+	int y1 = 0;
+	int x2 = 1;
+	int y2 = 1;
 };
 
 #endif // __j1SCENE_H__

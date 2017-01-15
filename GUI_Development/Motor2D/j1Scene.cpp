@@ -208,7 +208,6 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_file.xml");
 
@@ -240,8 +239,24 @@ bool j1Scene::Update(float dt)
 
 	App->win->SetTitle(title.GetString());
 
+	//SELECTION
+	if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+	{
+		x1 = x - App->render->camera.x;
+		y1 = y - App->render->camera.y;
+	}
+
+	else if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+	{
+		x2 = x - App->render->camera.x;
+		y2 = y - App->render->camera.y;
+	}
+	//--
+
+	App->map->DrawSelection(x1, y1, x2, y2);
+
 	// Debug pathfinding ------------------------------
-	//int x, y;
+
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
