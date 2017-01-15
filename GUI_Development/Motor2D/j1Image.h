@@ -16,6 +16,12 @@ public:
 public:
 	bool Draw(float dt, Element* item);
 	bool Update(float dt, Element* item);
+
+	void CreateViewport(SDL_Rect);
+
+private:
+	SDL_Rect viewport;
+	bool viewported = false;
 };
 
 #endif // !__IMAGE__

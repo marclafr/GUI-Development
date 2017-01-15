@@ -27,20 +27,20 @@ bool j1Button::Update(float dt, Element* item)
 	if (item->l_click == true || item->r_click == true)
 	{
 		if (item->l_click == true || item->r_click == true)
-			button->section = { 415,172,225,61 };
+			button->section = brigth_button;
 
 		else
-			button->section = { 5, 117, 225, 61 };
+			button->section = button_hover;
 	}
 
 	else if (item->mouse_inside == true)
 	{
-		button->section = { 5, 117, 225, 61 };
+		button->section = button_hover;
 	}
 
 	if (item->mouse_inside == false)
 	{
-		button->section = { 647, 173, 225, 61 };
+		button->section = dark_button;
 	}
 
 	if (button->l_click == true && item->can_drag == true)

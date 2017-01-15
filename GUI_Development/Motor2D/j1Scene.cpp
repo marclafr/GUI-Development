@@ -31,9 +31,31 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	///SCREEN
-	Element* screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 768, 579 }, false);
-	//screen->parent = nullptr;
-	//screen->priority = 0;
+	Element* screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 1024, 576 }, false);
+
+	Element* background = (Element*)App->gui->CreateImage({ 0, 1600, 1024, 576 }, { 0,0, 1024, 576 }, false);
+	screen->AddChild(background);
+	Element* window = (Element*)App->gui->CreateImage({ 0, 512, 483, 512 }, { 285,25,483,512 }, false);
+	screen->AddChild(window);
+	Element* button = (Element*)App->gui->CreateButton({ 645, 165, 229, 69 }, { 415, 425, 225, 61 }, false);
+	window->AddChild(button);
+	button->can_click = true;
+	Element* wind_title = (Element*)App->gui->CreateLabel("Select Your Character", 22, { 415, 75, 225, 61 });
+	window->AddChild(wind_title);
+	Element* butt_title = (Element*)App->gui->CreateLabel("Continue", 15, { 485, 445, 225, 61 });
+	button->AddChild(butt_title);
+	Element* heroes_1 = (Element*)App->gui->CreateImage({ 0, 1024, 1025, 287 }, { heroes1_x_pos_min, heroes_y_pos, 2050, 287 }, false);
+	window->AddChild(heroes_1);
+	heroes_1->can_click = true;
+	heroes_1->can_drag = true;
+	Element* heroes_2 = (Element*)App->gui->CreateImage({ 0, 1311, 1025, 287 }, { heroes2_x_pos_min, heroes_y_pos, 1025, 287 }, false);
+	heroes_1->AddChild(heroes_2);
+	heroes1 = (j1Image*)heroes_1;
+	heroes1->CreateViewport({ 415, heroes_y_pos, 205, 287 });
+	heroes2 = (j1Image*)heroes_2;
+	heroes2->CreateViewport({ 415, heroes_y_pos, 205, 287 });
+
+
 
 	/*
 	//EXERCISE 1
@@ -62,6 +84,7 @@ bool j1Scene::Start()
 	//--
 	*/
 	
+	/*
 	Element* img = (Element*)App->gui->CreateImage({ 485, 829, 328, 103 },  { 800, 100, 328, 103 },false);
 	Element* window = (Element*)App->gui->CreateImage({ 31,542,424,454 }, { 300,100,424,454 },false);
 	Element* button = (Element*)App->gui->CreateButton({ 647, 173, 225, 61 }, { 400, 350, 225, 61 },false);
@@ -106,6 +129,7 @@ bool j1Scene::Start()
 	butt_title->can_drag = true;
 	slider->can_click = true;
 	slider->can_drag = true;
+	*/
 	
 	return true;
 }
@@ -119,6 +143,23 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	if (heroes1->position.y != heroes_y_pos)
+		heroes1->position.y = heroes_y_pos;
+
+	if (heroes1->position.x <= heroes1_x_pos_min - heroes1_x_pos_max)
+	{
+		heroes1->position.x = heroes1_x_pos_min - heroes1_x_pos_max;
+		heroes2->position.x = heroes2_x_pos_min - heroes1_x_pos_max;
+	}
+	if (heroes1->position.x >= heroes1_x_pos_min + 1)
+	{
+		heroes1->position.x = heroes1_x_pos_min;
+		heroes2->position.x = heroes2_x_pos_min;
+	}
+
+	if (heroes2->position.y != heroes_y_pos)
+		heroes2->position.y = heroes_y_pos;
+
 	//EXERCISE 2 && 3
 	/*if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{

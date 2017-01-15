@@ -40,12 +40,13 @@ private:
 	GuiImage* banner;
 	GuiText* text;
 
-	/*
-	j1Image* player1_char;
-	j1Image* player2_char;
-	j1Image* blue_sel_box;
-	j1Image* red_sel_box;
-	*/
+	j1Image* heroes1;
+	j1Image* heroes2;
+
+	int heroes_y_pos = 125;
+	int heroes1_x_pos_min = 415;
+	int heroes1_x_pos_max = 1845;
+	int heroes2_x_pos_min = 1439;
 };
 
 #endif // __j1SCENE_H__

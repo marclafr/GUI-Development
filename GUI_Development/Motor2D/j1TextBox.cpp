@@ -7,7 +7,7 @@
 j1TextBox::j1TextBox(p2SString txt, SDL_Texture& tex, int size, bool is_password, SDL_Rect& rect, uint tab_order, int id) : text(txt, size), text_texture(&tex), is_password(is_password), Element(elem_type::text_box, rect, tab_order, id)
 {
 	text.SetFont("fonts/open_sans/OpenSans-Regular.ttf", size);
-	text_texture = App->font->Print(text.text.GetString(), SDL_Color{ (255),(0),(100),(255) }, text.font);
+	text_texture = App->font->Print(text.text.GetString(), SDL_Color{ (255), (255), (255), (255) }, text.font);
 	if (txt != NULL)
 		write_pos = txt.Length();
 }

@@ -6,7 +6,15 @@
 bool j1Image::Draw(float dt, Element* item)
 {
 	j1Image* temp = (j1Image*)item;
-	App->render->Blit(App->gui->GetAtlas(), item->position.x - App->render->camera.x, item->position.y - App->render->camera.y, &temp->section);
+	if (temp->viewported == true)
+	{
+		SDL_RenderSetViewport(App->render->renderer, &viewport);
+		App->render->Blit(App->gui->GetAtlas(), item->position.x - viewport.x - App->render->camera.x, item->position.y - viewport.y - App->render->camera.y, &temp->section);
+		SDL_RenderSetViewport(App->render->renderer, NULL);
+	}
+	else
+		App->render->Blit(App->gui->GetAtlas(), item->position.x - App->render->camera.x, item->position.y - App->render->camera.y, &temp->section);
+
 	for (p2List_item<Element*>* childs_item = item->childs.start; childs_item; childs_item = childs_item->next)
 	{
 		childs_item->data->Draw(dt, childs_item->data);
@@ -28,4 +36,10 @@ bool j1Image::Update(float dt, Element* item)
 			item->DragElement();
 
 	return true;
+}
+
+void j1Image::CreateViewport(SDL_Rect rect)
+{
+	viewported = true;
+	viewport = rect;
 }
