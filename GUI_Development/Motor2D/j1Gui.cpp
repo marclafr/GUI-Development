@@ -30,7 +30,8 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
 	screen = (Element*)App->gui->CreateImage({ 0,0,0,0 }, { 0,0, 1024, 576 }, false);
-
+	screen->priority = 1;
+	screen->parent = nullptr;
 	return ret;
 }
 
